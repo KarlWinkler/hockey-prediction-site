@@ -1,0 +1,17 @@
+@use 'range_input_element';
+
+.RangeInput {
+  margin: 0 2em;
+  text-align: left;
+  
+}
+
+.RangeLabel {
+  padding: 0.5em;
+}
+
+.RangeHint {
+  font-size: 0.8em;
+  margin: 0;
+  color: var(--colour-grey);
+}

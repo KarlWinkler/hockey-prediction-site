@@ -1,0 +1,38 @@
+body {
+  margin: 0;
+
+  font-family: "Lato", Arial, sans-serif;
+  font-size: 18px;
+  line-height: 22px;
+  color: #000000;
+
+  scroll-behavior: smooth;
+
+  --colour-primary: #f26865;
+  --colour-primary-50: rgba(242, 104, 101, 0.5);
+  --colour-primary-20: rgba(242, 104, 101, 0.2);
+
+  --colour-secondary: #008375;
+  --colour-secondary-darker: #00695c;
+  --colour-secondary-50: rgba(0, 131, 117, 0.5);
+  --colour-secondary-20: rgba(0, 131, 117, 0.2);
+
+  --colour-grey: #747578;
+  
+  --colour-h1: #ffcd46; 
+  --colour-h2: #4393c3;
+  --colour-h3: #4451e8;
+
+  // range input variables
+  --thumbSize: 15px;
+  --trackSize: 5px;
+  --thumbBg: var(--colour-secondary);
+  --thumbBorder: 3px solid #fff;
+  --trackBg: var(--colour-secondary-20);
+  --trackBorder: 1px solid var(--colour-secondary-50);
+  --progressBg: var(--colour-secondary-50);
+
+  /* webkit progress workaround */
+  --webkitProgressPercent: 0%;
+}
+
