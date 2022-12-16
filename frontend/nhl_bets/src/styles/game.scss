@@ -1,0 +1,16 @@
+.Game {
+  position: relative;
+  display: grid;
+  grid-template-columns: 32vw 8vw 32vw;
+  align-items: center;
+  justify-items: center;
+  color: white;
+
+  .Selected-home {
+    grid-template-columns: 56vw 8vw 8vw;
+  }
+
+  .Selected-away {
+    grid-template-columns: 8vw 8vw 56vw;
+  }
+}

@@ -1,0 +1,32 @@
+.Team {
+  position: relative;
+  overflow: hidden;
+  display: inline;
+  width: 100%;
+  text-align: center;
+
+  padding: 2em;
+  border-radius: 8px;
+  background-color: rgba($color: white, $alpha: .6);;
+  box-shadow: 0 0 0.5em 0 rgba($color: white, $alpha: .6);
+}
+
+.Team-name {
+  color: black;
+  position: relative;
+  z-index: 10;
+  background-color: aliceblue;
+  border-radius: 8px;
+  // box-shadow: 0 0 0.5em 0.5em aliceblue;
+  padding: .5em 1em;
+}
+
+.Team-bg {
+  position: absolute;
+  top: -16vw;
+  left: 0;
+  width: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}

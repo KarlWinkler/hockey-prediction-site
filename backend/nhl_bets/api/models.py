@@ -3,11 +3,19 @@ from django.conf import settings
 
 # Create your models here.
 
+class Icon(models.Model):
+    name = models.CharField(max_length=50)
+    image = models.ImageField(upload_to='images/')
+
+    def __str__(self):
+        return self.name
+
 class Team(models.Model):
     name = models.CharField(max_length=50)
     abbreviation = models.CharField(max_length=3)
     nhl_id = models.IntegerField()
     official_site_url = models.CharField(max_length=100)
+    icon = models.ForeignKey(Icon, on_delete=models.PROTECT)
 
     def __str__(self):
         return self.name
