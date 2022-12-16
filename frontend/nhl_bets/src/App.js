@@ -21,6 +21,7 @@ function App() {
         <Routes>
           <Route path='/admin' element={<Admin />} />
           <Route path='/' element={<Home />} />
+          <Route path='/games/:date' element={<Home />} />
         </Routes>
 
         <Footer />

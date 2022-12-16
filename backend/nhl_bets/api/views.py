@@ -21,6 +21,12 @@ def get_games(request):
     serializer = GameSerializer(games, many=True)
     return Response(serializer.data, status=200)
 
+@api_view(('GET',))
+def get_games_by_date(request, date):
+    games = Game.objects.filter(date__contains=date)
+    serializer = GameSerializer(games, many=True)
+    return Response(serializer.data, status=200)
+
 @api_view(('POST',))
 def update_games(request, date=''):
     games = requests.get(f'https://statsapi.web.nhl.com/api/v1/schedule?date={date}')
