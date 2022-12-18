@@ -81,7 +81,8 @@ const Home = () => {
     let response = await fetch(`/api/bets/${game}`, {
       method: 'DELETE',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'X-CSRFToken': getCookie('csrftoken')
       },
     })
     let data = await response.json()

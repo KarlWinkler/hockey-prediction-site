@@ -80,8 +80,20 @@ def create_or_update_bet(request, game, pick):
     bet.save()
     return bet
 
-@api_view(('GET',))
+@api_view(('GET', 'DELETE'))
+def bets_path(request, game):
+    if request.method == 'GET':
+        return get_bets(request, game)
+
+    if request.method == 'DELETE':
+        return delete_bet(request, game)
+
 def get_bets(request, game):
-    bets = Bet.objects.filter(game=game)
+    bets = Bet.objects.filter(game_id=game, user_id=request.user.id)
     serializer = BetSerializer(bets, many=True)
     return Response(serializer.data, status=200)
+
+def delete_bet(request, game):
+    bet = Bet.objects.filter(game_id=game, user_id=request.user.id)
+    bet.delete()
+    return Response('deleted bet', status=200)
