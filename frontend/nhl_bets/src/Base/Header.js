@@ -5,6 +5,8 @@ const Header = () => {
   return (
     <div className='Header'>
       Header
+      <div>Dashboard</div>
+      <div>Games</div>
     </div>
   )
 }
