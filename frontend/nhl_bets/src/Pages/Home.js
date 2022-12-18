@@ -8,20 +8,46 @@ import '../styles/game.scss'
 
 const Home = () => {
   let [games, setGames] = useState(null)
+  let [bets, setBets] = useState(null)
   let { date } = useParams()
 
-  let updateGames = async (e) => {
-    let selectDate = date ? date : new Date().toJSON().slice(0,10) 
-    let response = await fetch(`/api/games/${selectDate}`)
-    let data = await response.json()
-    console.log(data)
-    setGames(data)
-  }
+  useEffect(() => {
+    get_games()
+  }, [])
 
   useEffect(() => {
-    updateGames()
+    get_bets()
     gameList()
-  }, [])
+  }, [games])
+
+  useEffect(() => {
+    updateGamesBets()
+  }, [bets])
+
+  let get_games = async () => {
+    let selectDate = date ? date : new Date().toJSON().slice(0,10)
+    let response = await fetch(`/api/games/${selectDate}`)
+    let data = await response.json()
+    setGames(data)
+    // get_bets()
+  }
+
+  let get_bets = async () => { 
+    if (games !== null) {
+      let gameList = games.map(game => game.id)
+      console.log(gameList)
+      let response = await fetch(`/api/bets?games=${gameList}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': getCookie('csrftoken')
+        }
+      })
+
+      let data = await response.json()
+      setBets(data)
+    }
+  }
 
   let gameList = () => {
     if(games !== null && games !== undefined) {
@@ -30,10 +56,22 @@ const Home = () => {
         let away_team = game.away_team
 
         return (
-          <div id={game.id} className='Game' key={index} onClick={pickTeam}>
-            <Team id={home_team.id} home={true} name={home_team.name} icon={home_team.icon.image} /> vs. <Team id={away_team.id} name={away_team.name} icon={away_team.icon.image} />
+          <div id={`game_${game.id}`} className='Game' key={index} onClick={pickTeam}>
+            <Team id={`team_${home_team.id}`} home={true} name={home_team.name} icon={home_team.icon.image} /> vs. <Team id={`team_${away_team.id}`} name={away_team.name} icon={away_team.icon.image} />
           </div>
         )
+      });
+    }
+  }
+
+  let updateGamesBets = async (e) => {
+    if (bets !== null) {
+      console.log(bets)
+      bets.forEach(bet => {
+        let game = document.getElementById(`game_${bet.game}`)
+        if (game !== null) {
+          game.classList.add(`Selected-${bet.pick}`)
+        }
       });
     }
   }
@@ -42,23 +80,22 @@ const Home = () => {
     let game = e.target.closest('.Game')
     let team = e.target.closest('.Team')
 
-    console.log(team)
     if (team.classList.contains('home-team')) {
       if(game.classList.contains('Selected-home')) {
-        deleteBet(game.id)
+        deleteBet(game.id.split('_')[1])
       }
       else {
-        sendBet(game.id, 'home')
+        sendBet(game.id.split('_')[1], 'home')
       }
       game.classList.remove('Selected-away')
       game.classList.toggle('Selected-home')
     }
     else {
       if(game.classList.contains('Selected-away')) {
-        deleteBet(game.id)
+        deleteBet(game.id.split('_')[1])
       }
       else {
-        sendBet(game.id, 'away')
+        sendBet(game.id.split('_')[1], 'away')
       }
       game.classList.remove('Selected-home')
       game.classList.toggle('Selected-away')
@@ -74,11 +111,11 @@ const Home = () => {
       },
     })
     let data = await response.json()
-    console.log(data)
+    console.log(`/api/bets/${game}`)
   }
 
   let deleteBet = async (game) => {
-    let response = await fetch(`/api/bets/${game}`, {
+    let response = await fetch(`/api/bets/delete/${game}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
