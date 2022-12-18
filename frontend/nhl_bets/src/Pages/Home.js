@@ -68,7 +68,7 @@ const Home = () => {
         let away_team = game.away_team
 
         return (
-          <div id={`game_${game.id}`} className='Game' key={index} onClick={pickTeam}>
+          <div id={`game_${game.id}`} className={`Game ${game.status} winner_${game.winner}`} key={index} onClick={pickTeam}>
             <Team id={`team_${home_team.id}`} home={true} name={home_team.name} icon={home_team.icon.image} /> vs. <Team id={`team_${away_team.id}`} name={away_team.name} icon={away_team.icon.image} />
           </div>
         )
@@ -83,6 +83,20 @@ const Home = () => {
         let game = document.getElementById(`game_${bet.game}`)
         if (game !== null) {
           game.classList.add(`Selected-${bet.pick}`)
+          
+          if (game.classList.contains('Final')) {
+            let winner = game.className.match(/winner_[\S]{4}/)[0].split('_')[1]
+            if (winner == bet.pick) {
+              console.log('winner', winner, bet.pick)
+              game.classList.add('correct')
+            }
+            else {
+              game.classList.add('incorrect')
+            }
+          }
+          else if (game.classList.contains('Progress')) {
+            game.classList.add('in-progress')
+          }
         }
       });
     }
@@ -91,6 +105,10 @@ const Home = () => {
   let pickTeam = (e) => {
     let game = e.target.closest('.Game')
     let team = e.target.closest('.Team')
+
+    if (game.classList.contains('Final') || game.classList.contains('Progress')) {
+      return
+    }
 
     if (team.classList.contains('home-team')) {
       if(game.classList.contains('Selected-home')) {

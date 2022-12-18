@@ -49,6 +49,8 @@ def create_or_update_game(game):
         _game.game_id=game['gamePk']
         _game.date=parse_datetime(game['gameDate'])
         _game.status=game['status']['detailedState']
+        _game.away_score=game['teams']['away']['score']
+        _game.home_score=game['teams']['home']['score']
         _game.home_team=Team.objects.get(nhl_id=game['teams']['home']['team']['id'])
         _game.away_team=Team.objects.get(nhl_id=game['teams']['away']['team']['id'])
     else:

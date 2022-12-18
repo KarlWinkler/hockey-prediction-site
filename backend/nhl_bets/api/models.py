@@ -30,6 +30,16 @@ class Game(models.Model):
     away_score = models.IntegerField(blank=True, null=True)
     result_in = models.IntegerField(blank=True, null=True) # 0 = regulation, 1 = overtime, 2 = shootout
 
+    @property
+    def winner(self):
+        if self.home_score != None and self.away_score != None:
+            if self.home_score > self.away_score:
+                return 'home'
+            elif self.away_score > self.home_score:
+                return 'away'
+            else:
+                return None
+
     def __str__(self):
         return self.home_team.name + ' vs ' + self.away_team.name
 

@@ -10,11 +10,16 @@
 
   transition: all .1s ease-in-out;
 
+  --colour-selected: white;
+  --colour-correct: #1C6758;
+  --colour-incorrect: #EB1D36;
+  --colour-inProgress: #F2C94C;
+
   &.Selected-home {
     grid-template-columns: 56vw 8vw 8vw;
     background-image: linear-gradient(
       90deg,
-      rgba($color: white, $alpha: .4), 
+      var(--colour-selected), 
       transparent 100%,
     );
     padding-left: 20vw;
@@ -57,7 +62,7 @@
     background-image: linear-gradient(
       90deg,
       transparent 0%,
-      rgba($color: white, $alpha: .4), 
+      var(--colour-selected), 
     );
 
     &> .Team:nth-child(1) {
@@ -89,5 +94,17 @@
         cursor: pointer;
       }
     }
+  }
+
+  &.correct {
+    --colour-selected: var(--colour-correct);
+  }
+
+  &.incorrect {
+    --colour-selected: var(--colour-incorrect);
+  }
+
+  &.in-progress {
+    --colour-selected: var(--colour-inProgress);
   }
 }
