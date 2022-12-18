@@ -1,8 +1,10 @@
 from django.shortcuts import render, get_object_or_404
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from .models import Game, Team
-from .serializers.games_serializer import GameSerializer
+from .models import Game, Team, Bet
+from django.contrib.auth.models import User
+from .serializers.game_serializer import GameSerializer
+from .serializers.bet_serializer import BetSerializer
 import requests
 
 # Create your views here.
@@ -54,3 +56,32 @@ def create_or_update_game(game):
         )
         game.save()
     return game
+
+@api_view(('POST',))
+def update_bets(request, game, pick):
+    if request.user.id is None:
+        return Response({'message': 'not logged in'}, status=401)
+
+    create_or_update_bet(request, game, pick)
+    return Response('updated bets', status=200)
+
+def create_or_update_bet(request, game, pick):
+    matching_bet=Bet.objects.filter(game_id=game, user_id=request.user.id)
+    if matching_bet.exists():
+        bet=matching_bet[0]
+        bet.pick=pick
+    else:
+        bet = Bet.objects.create(
+            game=Game.objects.get(pk=game),
+            user=User.objects.get(pk=request.user.id),
+            pick=pick,
+            bet_amount=1,
+        )
+    bet.save()
+    return bet
+
+@api_view(('GET',))
+def get_bets(request, game):
+    bets = Bet.objects.filter(game=game)
+    serializer = BetSerializer(bets, many=True)
+    return Response(serializer.data, status=200)

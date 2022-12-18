@@ -31,15 +31,15 @@ class Game(models.Model):
     result_in = models.IntegerField(blank=True, null=True) # 0 = regulation, 1 = overtime, 2 = shootout
 
     def __str__(self):
-        return self.home_team + ' vs ' + self.away_team
+        return self.home_team.name + ' vs ' + self.away_team.name
 
 class Bet(models.Model):
     game = models.ForeignKey(Game, on_delete=models.PROTECT)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
-    bet_amount = models.IntegerField() # in points
-    result = models.CharField(max_length=50) # win, lose, pending
-    team = models.CharField(max_length=50) # home or away
+    bet_amount = models.IntegerField() # in points (unimplemented)
+    result = models.CharField(max_length=50, default='pending') # win, lose, pending
+    pick = models.CharField(max_length=16, default='home') # home or away
 
     def __str__(self):
-        return self.user + ' bet ' + self.home_score + ' - ' + self.away_score + ' on ' + self.game
+        return self.user.first_name + ' bet for ' + str(self.game.game_id)
 
