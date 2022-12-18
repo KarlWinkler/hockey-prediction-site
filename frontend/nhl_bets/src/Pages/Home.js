@@ -26,10 +26,22 @@ const Home = () => {
 
   let get_games = async () => {
     let selectDate = date ? date : new Date().toJSON().slice(0,10)
-    let response = await fetch(`/api/games/${selectDate}`)
+
+    console.log(new Date() )
+
+    let response = await fetch(`/api/games/${selectDate + timezone()}`)
     let data = await response.json()
     setGames(data)
     // get_bets()
+  }
+
+  let timezone = () => {
+    let date = new Date()
+    let offset = date.getTimezoneOffset()
+    let hours = ('00' + Math.floor(offset / 60)).slice(-2)
+    let minutes = ('00' + offset % 60).slice(-2)
+    let operator = offset < 0 ? '+' : '-'
+    return `T00%3A00%3A00${operator}${hours}%3A${minutes}`
   }
 
   let get_bets = async () => { 

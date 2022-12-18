@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from django.utils.dateparse import parse_datetime
 from .models import Game, Team, Bet
 from django.contrib.auth.models import User
 from .serializers.game_serializer import GameSerializer
@@ -25,7 +26,12 @@ def get_games(request):
 
 @api_view(('GET',))
 def get_games_by_date(request, date):
-    games = Game.objects.filter(date__contains=date)
+    parsed_date = parse_datetime(date)
+    print(parsed_date)
+    beginning_of_day = parsed_date.combine(parsed_date, parsed_date.min.time(), parsed_date.tzinfo)
+    end_of_day = parsed_date.combine(parsed_date, parsed_date.max.time(), parsed_date.tzinfo)
+    print(beginning_of_day, end_of_day)
+    games = Game.objects.filter(date__range=(beginning_of_day, end_of_day))
     serializer = GameSerializer(games, many=True)
     return Response(serializer.data, status=200)
 
@@ -39,23 +45,23 @@ def update_games(request, date=''):
 
 def create_or_update_game(game):
     if Game.objects.filter(game_id=game['gamePk']).exists():
-        game = Game.objects.get(game_id=game['gamePk'])
-        game.game_id = game['gamePk']
-        game.date = game['gameDate']
-        game.status = game['status']['detailedState']
-        game.home_team = Team.objects.get(nhl_id=game['teams']['home']['team']['id'])
-        game.away_team = Team.objects.get(nhl_id=game['teams']['away']['team']['id'])
-        game.save()
+        _game=Game.objects.get(game_id=game['gamePk'])
+        _game.game_id=game['gamePk']
+        _game.date=parse_datetime(game['gameDate'])
+        _game.status=game['status']['detailedState']
+        _game.home_team=Team.objects.get(nhl_id=game['teams']['home']['team']['id'])
+        _game.away_team=Team.objects.get(nhl_id=game['teams']['away']['team']['id'])
     else:
-        game = Game.objects.create(
+        _game = Game.objects.create(
             game_id=game['gamePk'],
-            date=game['gameDate'][0:10],
+            date=parse_datetime(game['gameDate']),
             status=game['status']['detailedState'],
             home_team=Team.objects.get(nhl_id=game['teams']['home']['team']['id']),
             away_team=Team.objects.get(nhl_id=game['teams']['away']['team']['id'])
         )
-        game.save()
-    return game
+    
+    _game.save()
+    return _game
 
 @api_view(('POST',))
 def update_bets(request, game, pick):
@@ -82,8 +88,12 @@ def create_or_update_bet(request, game, pick):
 
 @api_view(('GET',))
 def get_bets(request):
-    games = request.GET.get('games', [])
-    games = games.split(',')
+    games = request.GET.get('games', None)
+    if games in [None, '']:
+        games = []
+    else:
+        games = games.split(',')
+
     bets = Bet.objects.filter(game_id__in=games, user_id=request.user.id)
     serializer = BetSerializer(bets, many=True)
     return Response(serializer.data, status=200)

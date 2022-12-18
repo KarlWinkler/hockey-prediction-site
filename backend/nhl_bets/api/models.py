@@ -21,7 +21,7 @@ class Team(models.Model):
         return self.name
 
 class Game(models.Model):
-    date = models.DateField()
+    date = models.DateTimeField()
     game_id = models.IntegerField()
     status = models.CharField(max_length=50)
     home_team = models.ForeignKey(Team, on_delete=models.PROTECT, related_name='%(class)s_home_team')
