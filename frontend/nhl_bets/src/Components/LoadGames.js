@@ -1,14 +1,10 @@
 import React, { useState } from 'react'
 import getCookie from '../Extras/GetCookie'
 
-import LoadGames from '../Components/LoadGames'
-
-const Admin = () => {
+const LoadGames = ({ date }) => {
   let [games, setGames] = useState(null)
-  let [date, setDate] = useState(new Date().toJSON().slice(0,10))
 
   let updateGames = async () => {
-    let date = document.querySelector('#date').value
     console.log('date', date)
     let response = await fetch(`/api/games/update${'/' + date}`, {
       method: 'POST',
@@ -30,11 +26,10 @@ const Admin = () => {
   }
 
   return (
-    <div>
-      <input id='date' type='date' onChange={(e) => {setDate(e.target.value)}} />
-      <LoadGames date={date}/>
+    <div className=':)'>
+      <button onClick={updateGames}>Update Games</button>
     </div>
   )
 }
 
-export default Admin
+export default LoadGames

@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
+import getCookie from '../Extras/GetCookie'
 
 import Team from '../Components/Team'
-import getCookie from '../Extras/GetCookie'
+import LoadGames from '../Components/LoadGames'
 import '../styles/home.scss'
 import '../styles/game.scss'
 
@@ -158,6 +159,7 @@ const Home = () => {
 
   return (
     <div className='Home-wrapper'>
+      <LoadGames date={date}/>
       {gameList()}
     </div>
   )
