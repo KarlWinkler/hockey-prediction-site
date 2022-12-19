@@ -4,6 +4,7 @@ import getCookie from '../Extras/GetCookie'
 
 import Team from '../Components/Team'
 import LoadGames from '../Components/LoadGames'
+import DateBar from '../Components/DateBar'
 import '../styles/home.scss'
 import '../styles/game.scss'
 
@@ -159,6 +160,7 @@ const Home = () => {
 
   return (
     <div className='Home-wrapper'>
+      <DateBar date={date}/>
       <LoadGames date={date}/>
       {gameList()}
     </div>

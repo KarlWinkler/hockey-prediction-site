@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import getCookie from '../Extras/GetCookie'
+import '../styles/load_games.scss'
 
 const LoadGames = ({ date }) => {
   let [games, setGames] = useState(null)
@@ -16,6 +17,7 @@ const LoadGames = ({ date }) => {
     let data = await response.json()
     setGames(data)
     console.log(games)
+    window.location.reload()
     // document.querySelector('#games').innerHTML = gameList().map(game => '<p>' + game + '</p>').join('')
   }
 
@@ -26,8 +28,8 @@ const LoadGames = ({ date }) => {
   }
 
   return (
-    <div className=':)'>
-      <button onClick={updateGames}>Update Games</button>
+    <div className='LoadGames'>
+      <div onClick={updateGames}>Update Games</div>
     </div>
   )
 }
