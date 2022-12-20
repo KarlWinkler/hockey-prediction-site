@@ -6,7 +6,7 @@ class WinPercent:
         self.start_date = start_date
         self.end_date = end_date
         self.bets = Bet.objects.filter(user_id=user_id, game__date__range=(start_date, end_date))
-        self.total_bets = self.bets.count()
+        self.total_bets = self.bets.filter(game__status='Final').count()
         self.total_wins = len([bet for bet in self.bets if bet.win])
         self.total_losses = len([bet for bet in self.bets if not(bet.win)])
         self.win_percent = self.total_wins / self.total_bets
