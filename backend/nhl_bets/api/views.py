@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from django.utils.dateparse import parse_datetime
 from .models import Game, Team, Bet
 from .services.win_percent import WinPercent
+from .services.record_by_day import RecordByDay
 from django.contrib.auth.models import User
 from .serializers.game_serializer import GameSerializer
 from .serializers.bet_serializer import BetSerializer
@@ -32,7 +33,9 @@ def get_games_by_date(request, date):
     beginning_of_day = parsed_date.combine(parsed_date, parsed_date.min.time(), parsed_date.tzinfo)
     end_of_day = parsed_date.combine(parsed_date, parsed_date.max.time(), parsed_date.tzinfo)
     print(beginning_of_day, end_of_day)
-    games = Game.objects.filter(date__range=(beginning_of_day, end_of_day))
+    # stupid syntax for ordering by ascending or descending
+    # https://stackoverflow.com/questions/9834038/django-order-by-query-set-ascending-and-descending
+    games = Game.objects.filter(date__range=(beginning_of_day, end_of_day)).order_by('-date')
     serializer = GameSerializer(games, many=True)
     return Response(serializer.data, status=200)
 
@@ -112,4 +115,5 @@ def bet_stats(request):
     date_from=parse_datetime(request.GET.get('from', None))
     date_to=parse_datetime(request.GET.get('to', None))
     win_percent = WinPercent(request.user.id, date_from, date_to)
-    return Response(win_percent.toJSON(), status=200)
+    record_per_day = RecordByDay(request.user.id, date_from, date_to)
+    return Response({ **win_percent.toJSON(), **record_per_day.toJSON() }, status=200)
