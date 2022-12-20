@@ -8,6 +8,11 @@ body {
 
   scroll-behavior: smooth;
 
+  --colour-selected: white;
+  --colour-correct: #1C6758;
+  --colour-incorrect: #EB1D36;
+  --colour-inProgress: #F2C94C;
+
   --colour-primary: #f26865;
   --colour-primary-50: rgba(242, 104, 101, 0.5);
   --colour-primary-20: rgba(242, 104, 101, 0.2);

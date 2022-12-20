@@ -1,0 +1,31 @@
+.PieChart {
+  position: relative;
+  
+  width: 200px;
+  height: 200px;
+  background-color: var(--colour-correct);
+  border-radius: 50%;
+  background-image: linear-gradient(to right, transparent 50%, var(--colour-incorrect) 0);
+  overflow: hidden;
+
+  &> .PieChart-semi {
+    display: absolute;
+    top: 0;
+    margin-left: 50%;
+    height: 100%;
+    width: 100%;
+    border-radius: 0 100% 100% 0 / 50%;
+    background-color: var(--colour-incorrect);
+    transform-origin: left;
+    transition: all 0.5s ease-in-out;
+
+    &.gteq50 {
+      background-color: inherit;
+      transform: rotate(0deg);
+    }
+  }
+}
+
+.PieChart-value {
+  color: white;
+}

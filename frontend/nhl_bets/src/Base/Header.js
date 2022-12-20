@@ -12,6 +12,7 @@ const Header = () => {
     let month = `${new Date().getMonth() + 1}`
     let day = `${new Date().getDate()}`
     let date = `${year}-${month}-${day}`
+    
     window.location.href = `/games/${date}`
   }
   

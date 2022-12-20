@@ -10,11 +10,6 @@
 
   transition: all .1s ease-in-out;
 
-  --colour-selected: white;
-  --colour-correct: #1C6758;
-  --colour-incorrect: #EB1D36;
-  --colour-inProgress: #F2C94C;
-
   &.Selected-home {
     grid-template-columns: 56vw 8vw 8vw;
     background-image: linear-gradient(
