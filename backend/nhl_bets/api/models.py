@@ -47,8 +47,16 @@ class Bet(models.Model):
     game = models.ForeignKey(Game, on_delete=models.PROTECT)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
     bet_amount = models.IntegerField() # in points (unimplemented)
-    result = models.CharField(max_length=50, default='pending') # win, lose, pending
     pick = models.CharField(max_length=16, default='home') # home or away
+
+    @property
+    def win(self):
+        if self.game.winner != None:
+            if self.game.winner == self.pick:
+                return True
+            else:
+                return False
+
 
     def __str__(self):
         return self.user.first_name + ' bet for ' + str(self.game.game_id)

@@ -3,6 +3,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django.utils.dateparse import parse_datetime
 from .models import Game, Team, Bet
+from .services.win_percent import WinPercent
 from django.contrib.auth.models import User
 from .serializers.game_serializer import GameSerializer
 from .serializers.bet_serializer import BetSerializer
@@ -105,3 +106,10 @@ def delete_bet(request, game):
     bet = Bet.objects.filter(game_id=game, user_id=request.user.id)
     bet.delete()
     return Response('deleted bet', status=200)
+
+@api_view(('GET',))
+def bet_stats(request):
+    date_from=parse_datetime(request.GET.get('from', None))
+    date_to=parse_datetime(request.GET.get('to', None))
+    win_percent = WinPercent(request.user.id, date_from, date_to)
+    return Response(win_percent.toJSON(), status=200)
