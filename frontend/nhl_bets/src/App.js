@@ -4,6 +4,7 @@ import{
   Routes
 } from "react-router-dom";
 import Home from "./Pages/Home";
+import Games from "./Pages/Games";
 import Admin from "./Pages/Admin";
 
 import Header from "./Base/Header";
@@ -21,7 +22,7 @@ function App() {
         <Routes>
           <Route path='/admin' element={<Admin />} />
           <Route path='/' element={<Home />} />
-          <Route path='/games/:date' element={<Home />} />
+          <Route path='/games/:date' element={<Games />} />
         </Routes>
 
         <Footer />

@@ -5,14 +5,36 @@
   background-color: aliceblue;
   z-index: 100;
   padding: 1em;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  justify-items: start;
 }
 
-.NavBar {
-  position: relative;
+.Header-logo {
+  padding: 0 1em;
+}
+
+
+.Header-links {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  justify-self: center;
   align-items: center;
-  padding: 1em;
-  background-color: var(--colour-primary-20);
+  gap: 1em;
+}
+
+.Header-link {
+  color: black;
+  text-decoration: none;
+  transition: all .1s ease-in-out;
+
+  border: 1px solid black;
   border-radius: 8px;
+  padding: 4px;
+  &:hover {
+    cursor: pointer;
+    color: var(--colour-primary);
+    transition: all .1s ease-in-out;
+  }
 }
