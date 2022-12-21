@@ -36,7 +36,7 @@ def get_games_by_date(request, date):
     print(beginning_of_day, end_of_day)
     # stupid syntax for ordering by ascending or descending
     # https://stackoverflow.com/questions/9834038/django-order-by-query-set-ascending-and-descending
-    games = Game.objects.filter(date__range=(beginning_of_day, end_of_day)).order_by('-date')
+    games = Game.objects.filter(date__range=(beginning_of_day, end_of_day)).order_by('date')
     serializer = GameSerializer(games, many=True)
     return Response(serializer.data, status=200)
 
