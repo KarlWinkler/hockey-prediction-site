@@ -75,8 +75,8 @@ def update_bets(request, game, pick):
     if request.user.id is None:
         return Response({'message': 'not logged in'}, status=401)
 
-    if Game.objects.get(pk=game).date > datetime.now():
-        return Response({'message': 'game already started'}, status=400)
+    if Game.objects.get(pk=game).date < timezone.now():
+        return Response({'message': 'game already started'}, status=403)
 
     create_or_update_bet(request, game, pick)
     return Response('updated bets', status=200)
@@ -113,8 +113,8 @@ def delete_bet(request, game):
     if request.user.id is None:
         return Response({'message': 'not logged in'}, status=401)
 
-    if Game.objects.get(pk=game).date > datetime.now():
-        return Response({'message': 'game already started'}, status=400)
+    if Game.objects.get(pk=game).date < timezone.now():
+        return Response({'message': 'game already started'}, status=403)
 
     bet = Bet.objects.filter(game_id=game, user_id=request.user.id)
     bet.delete()
