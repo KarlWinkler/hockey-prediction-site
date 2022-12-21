@@ -70,7 +70,15 @@ const Games = () => {
 
         return (
           <div id={`game_${game.id}`} className={`Game ${game.status} winner_${game.winner}`} key={index} onClick={pickTeam}>
-            <Team id={`team_${home_team.id}`} home={true} name={home_team.name} icon={home_team.icon.image} /> vs. <Team id={`team_${away_team.id}`} name={away_team.name} icon={away_team.icon.image} />
+            <Team id={`team_${home_team.id}`} home={true} name={home_team.name} icon={home_team.icon.image} />
+
+            <span>
+              <span className='score'>{game.home_score}</span>
+              vs.
+              <span className='score'>{game.away_score}</span>
+            </span>
+
+            <Team id={`team_${away_team.id}`} name={away_team.name} icon={away_team.icon.image} />
           </div>
         )
       });
