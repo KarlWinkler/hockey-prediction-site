@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from .decorators.timezone import with_timezone
 from django.utils.dateparse import parse_datetime
 from .models import Game, Team, Bet
 from .services.win_percent import WinPercent
@@ -9,7 +10,8 @@ from django.contrib.auth.models import User
 from .serializers.game_serializer import GameSerializer
 from .serializers.bet_serializer import BetSerializer
 import requests
-import datetime
+from datetime import datetime
+from django.utils import timezone
 
 # Create your views here.
 @api_view(('GET',))
@@ -49,10 +51,11 @@ def update_games(request, date=''):
     return Response(games.json(), status=200)
 
 def create_or_update_game(game):
+    timezone_aware_date = timezone.make_aware(datetime.strptime(game['gameDate'], '%Y-%m-%dT%H:%M:%SZ'))
     if Game.objects.filter(game_id=game['gamePk']).exists():
         _game=Game.objects.get(game_id=game['gamePk'])
         _game.game_id=game['gamePk']
-        _game.date=parse_datetime(game['gameDate'])
+        _game.date=timezone_aware_date
         _game.status=game['status']['detailedState']
         _game.away_score=game['teams']['away']['score']
         _game.home_score=game['teams']['home']['score']
@@ -61,7 +64,7 @@ def create_or_update_game(game):
     else:
         _game = Game.objects.create(
             game_id=game['gamePk'],
-            date=parse_datetime(game['gameDate']),
+            date=timezone_aware_date,
             status=game['status']['detailedState'],
             home_team=Team.objects.get(nhl_id=game['teams']['home']['team']['id']),
             away_team=Team.objects.get(nhl_id=game['teams']['away']['team']['id'])
@@ -120,10 +123,21 @@ def delete_bet(request, game):
     bet.delete()
     return Response('deleted bet', status=200)
 
+@with_timezone
 @api_view(('GET',))
 def bet_stats(request):
-    date_from=parse_datetime(request.GET.get('from', None))
-    date_to=parse_datetime(request.GET.get('to', None))
+    date_from=request.GET.get('from', None)
+    date_to=request.GET.get('to', None)
+    if date_to == '' or date_from == '':
+        date_to = '2022-01-01'
+        date_from = '2022-12-31'
+
+    date_from=timezone.make_aware(datetime.strptime(request.GET.get('from', None), '%Y-%m-%d'))
+    date_to= timezone.make_aware(datetime.strptime(request.GET.get('to', None), '%Y-%m-%d'))
+    
+    if date_to > date_from:
+        date_from, date_to = date_to, date_from
+
     win_percent = WinPercent(request.user.id, date_from, date_to)
     record_per_day = RecordByDay(request.user.id, date_from, date_to)
     return Response({ **win_percent.toJSON(), **record_per_day.toJSON() }, status=200)

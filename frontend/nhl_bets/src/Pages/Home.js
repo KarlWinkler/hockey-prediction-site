@@ -14,7 +14,12 @@ const Home = () => {
   }, [from, to])
 
   let getStats = async () => {
-    let response = await fetch(`/api/bets/stats?from=${from}&to=${to}`)
+    let response = await fetch(`/api/bets/stats?from=${from}&to=${to}`, {
+      method: 'GET',
+      headers: {
+        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone
+      }
+    })
     let data = await response.json()
     console.log(data)
     setStats(data)
