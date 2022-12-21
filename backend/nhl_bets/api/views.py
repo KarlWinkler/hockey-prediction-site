@@ -135,9 +135,10 @@ def bet_stats(request):
     date_from=timezone.make_aware(datetime.strptime(request.GET.get('from', None), '%Y-%m-%d'))
     date_to= timezone.make_aware(datetime.strptime(request.GET.get('to', None), '%Y-%m-%d'))
     
-    if date_to > date_from:
+    if date_to < date_from:
         date_from, date_to = date_to, date_from
 
+    print(date_from, date_to)
     win_percent = WinPercent(request.user.id, date_from, date_to)
     record_per_day = RecordByDay(request.user.id, date_from, date_to)
     return Response({ **win_percent.toJSON(), **record_per_day.toJSON() }, status=200)

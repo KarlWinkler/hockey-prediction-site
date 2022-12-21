@@ -9,7 +9,7 @@ class RecordByDay:
         base = end_date
         numdays = (self.end_date - self.start_date).days
         date_list = [base - datetime.timedelta(days=x) for x in range(numdays)]
-        self.win_percents = [WinPercent(user_id, date, date.combine(date, date.max.time())) for date in date_list]
+        self.win_percents = [WinPercent(user_id, date, date.combine(date, date.max.time(), date.tzinfo)) for date in date_list]
 
     def __str__(self):
         return f'Record By Day: {self.win_percents}'
