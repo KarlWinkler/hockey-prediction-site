@@ -9,6 +9,7 @@ from django.contrib.auth.models import User
 from .serializers.game_serializer import GameSerializer
 from .serializers.bet_serializer import BetSerializer
 import requests
+import datetime
 
 # Create your views here.
 @api_view(('GET',))
@@ -74,6 +75,9 @@ def update_bets(request, game, pick):
     if request.user.id is None:
         return Response({'message': 'not logged in'}, status=401)
 
+    if Game.objects.get(pk=game).date > datetime.now():
+        return Response({'message': 'game already started'}, status=400)
+
     create_or_update_bet(request, game, pick)
     return Response('updated bets', status=200)
 
@@ -106,6 +110,12 @@ def get_bets(request):
 
 @api_view(('DELETE',))
 def delete_bet(request, game):
+    if request.user.id is None:
+        return Response({'message': 'not logged in'}, status=401)
+
+    if Game.objects.get(pk=game).date > datetime.now():
+        return Response({'message': 'game already started'}, status=400)
+
     bet = Bet.objects.filter(game_id=game, user_id=request.user.id)
     bet.delete()
     return Response('deleted bet', status=200)
