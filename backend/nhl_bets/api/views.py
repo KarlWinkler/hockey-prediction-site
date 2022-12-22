@@ -11,6 +11,7 @@ from .serializers.game_serializer import GameSerializer
 from .serializers.bet_serializer import BetSerializer
 import requests
 from datetime import datetime
+from datetime import timedelta
 from django.utils import timezone
 
 # Create your views here.
@@ -129,11 +130,11 @@ def bet_stats(request):
     date_from=request.GET.get('from', None)
     date_to=request.GET.get('to', None)
     if date_to == '' or date_from == '':
-        date_to = '2022-01-01'
-        date_from = '2022-12-31'
+        date_to = datetime.now().strftime('%Y-%m-%d')
+        date_from =  (datetime.now() - timedelta(days=7)).strftime('%Y-%m-%d')
 
-    date_from=timezone.make_aware(datetime.strptime(request.GET.get('from', None), '%Y-%m-%d'))
-    date_to= timezone.make_aware(datetime.strptime(request.GET.get('to', None), '%Y-%m-%d'))
+    date_from=timezone.make_aware(datetime.strptime(date_from, '%Y-%m-%d'))
+    date_to= timezone.make_aware(datetime.strptime(date_to, '%Y-%m-%d'))
     
     if date_to < date_from:
         date_from, date_to = date_to, date_from
