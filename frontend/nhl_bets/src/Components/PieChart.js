@@ -6,7 +6,7 @@ import '../styles/pie_chart.scss'
 const PieChart = ({ percent }) => {
 
   useEffect(() => {
-    {setPercent(percent)}
+    setPercent(percent)
   })
 
   let setPercent = (percent) => {
@@ -23,7 +23,7 @@ const PieChart = ({ percent }) => {
       deg = 180 - deg;
     }
 
-    console.log(`rotate(${deg})`, chart)
+    // console.log(`rotate(${deg})`, chart)
     chart.style.transform = `rotate(${deg}deg)`;
   }
   

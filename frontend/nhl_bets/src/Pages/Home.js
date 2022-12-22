@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react'
 
 import PieChart from '../Components/PieChart'
+import LineChart from '../Components/LineChart'
 import '../styles/home.scss'
 
 const Home = () => {
 
   let [stats, setStats] = useState({})
-  let [from, setFrom] = useState('2022-01-01')
-  let [to, setTo] = useState('2022-12-31')
+  let [from, setFrom] = useState('')
+  let [to, setTo] = useState('')
 
   useEffect(() => {
     getStats()
@@ -21,13 +22,14 @@ const Home = () => {
       }
     })
     let data = await response.json()
-    console.log(data)
     setStats(data)
   }
 
   return (
     <div className='Home-wrapper'>
       {stats == {} ? '' :  <PieChart percent={stats.win_percent * 100} />}
+      {stats == {} ? '' :  <LineChart dataPoints={stats.win_percents || []} />}
+      {console.log(stats)}
       <div className='date-range-selector'>
         <input type='date' onChange={ e => setFrom(e.target.value) } />
         <input type='date' onChange={ e => setTo(e.target.value) } />
