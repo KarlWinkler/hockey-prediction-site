@@ -13,6 +13,8 @@ import requests
 from datetime import datetime
 from datetime import timedelta
 from django.utils import timezone
+from .services.date_service import DateService
+
 
 # Create your views here.
 @api_view(('GET',))
@@ -34,8 +36,8 @@ def get_games(request):
 def get_games_by_date(request, date):
     parsed_date = parse_datetime(date)
     print(parsed_date)
-    beginning_of_day = parsed_date.combine(parsed_date, parsed_date.min.time(), parsed_date.tzinfo)
-    end_of_day = parsed_date.combine(parsed_date, parsed_date.max.time(), parsed_date.tzinfo)
+    beginning_of_day = DateService(parsed_date).start_of_day()
+    end_of_day = DateService(parsed_date).end_of_day()
     print(beginning_of_day, end_of_day)
     # stupid syntax for ordering by ascending or descending
     # https://stackoverflow.com/questions/9834038/django-order-by-query-set-ascending-and-descending
@@ -129,17 +131,18 @@ def delete_bet(request, game):
 def bet_stats(request):
     date_from=request.GET.get('from', None)
     date_to=request.GET.get('to', None)
-    if date_to == '' or date_from == '':
-        date_to = datetime.now().strftime('%Y-%m-%d')
-        date_from =  (datetime.now() - timedelta(days=7)).strftime('%Y-%m-%d')
+    if date_to == '':
+        date_to = timezone.localdate().strftime('%Y-%m-%d')
+    if date_from == '':
+        date_from = (parse_datetime(date_to) - timedelta(days=7)).strftime('%Y-%m-%d')
 
     date_from=timezone.make_aware(datetime.strptime(date_from, '%Y-%m-%d'))
     date_to= timezone.make_aware(datetime.strptime(date_to, '%Y-%m-%d'))
     
     if date_to < date_from:
         date_from, date_to = date_to, date_from
-
+    
     print(date_from, date_to)
-    win_percent = WinPercent(request.user.id, date_from, date_to)
+    win_percent = WinPercent(request.user.id, date_from, DateService(date_to).end_of_day())
     record_per_day = RecordByDay(request.user.id, date_from, date_to)
     return Response({ **win_percent.toJSON(), **record_per_day.toJSON() }, status=200)
