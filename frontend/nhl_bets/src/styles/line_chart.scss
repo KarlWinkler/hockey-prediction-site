@@ -1,12 +1,13 @@
 .LineChart-wrapper {
   padding: 1em;
   background-color: white;
-  width: 30vw;
+  width: fit-content;
+  max-width: 50vw;
+  overflow-x: scroll;
 }
 
 .LineChart {
   position: relative;
-  width: 100%;
   height: 200px;
   background-color: white;
 

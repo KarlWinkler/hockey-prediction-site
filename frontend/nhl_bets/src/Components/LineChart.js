@@ -73,7 +73,7 @@ const LineChart = ({ dataPoints }) => {
       //   lineChart.append(connectPoints(x1, x2, y1, y2))
       // }
     })
-    lineChart.parentElement.style.width = dataPoints.length * 20 + 'px'
+    lineChart.style.width = dataPoints.length * 20 + 'px'
     console.log(dataPoints.length * 20)
   }
 
