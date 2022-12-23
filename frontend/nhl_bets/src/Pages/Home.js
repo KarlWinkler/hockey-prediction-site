@@ -6,7 +6,7 @@ import '../styles/home.scss'
 
 const Home = () => {
 
-  let [stats, setStats] = useState({})
+  let [stats, setStats] = useState(null)
   let [from, setFrom] = useState('')
   let [to, setTo] = useState('')
 
@@ -27,8 +27,8 @@ const Home = () => {
 
   return (
     <div className='Home-wrapper'>
-      {stats == {} ? '' :  <PieChart percent={stats.win_percent * 100} />}
-      {stats == {} ? '' :  <LineChart dataPoints={stats.win_percents || []} />}
+      {stats == null ? '' :  <PieChart percent={stats.win_percent * 100} />}
+      {stats == null ? '' :  <LineChart dataPoints={stats.win_percents || []} />}
       {console.log(stats)}
       <div className='date-range-selector'>
         <input type='date' onChange={ e => setFrom(e.target.value) } />
