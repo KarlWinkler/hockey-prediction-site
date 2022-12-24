@@ -6,6 +6,7 @@ from django.utils.dateparse import parse_datetime
 from .models import Game, Team, Bet
 from .services.win_percent import WinPercent
 from .services.record_by_day import RecordByDay
+from .services.by_score_delta import ByScoreDelta
 from django.contrib.auth.models import User
 from .serializers.game_serializer import GameSerializer
 from .serializers.bet_serializer import BetSerializer
@@ -145,4 +146,8 @@ def bet_stats(request):
     print(date_from, date_to)
     win_percent = WinPercent(request.user.id, date_from, DateService(date_to).end_of_day())
     record_per_day = RecordByDay(request.user.id, date_from, date_to)
-    return Response({ **win_percent.toJSON(), **record_per_day.toJSON() }, status=200)
+    return Response({ **win_percent.toJSON(), **record_per_day.toJSON(), **by_score_deltas(request, date_from, date_to) }, status=200)
+
+def by_score_deltas(request, date_from, date_to):
+    score_delta_list = [ByScoreDelta(request.user.id, date_from, date_to, delta).toJSON() for delta in range(1, 6)]
+    return { 'by_score_deltas': score_delta_list }

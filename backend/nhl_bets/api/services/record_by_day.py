@@ -1,6 +1,5 @@
 from .win_percent import WinPercent
 from django.utils import timezone
-from backports import zoneinfo
 from .date_service import DateService
 
 class RecordByDay:
