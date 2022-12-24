@@ -11,7 +11,7 @@ class RecordByDay:
         self.end_date = end_date
         base = self.end_date
         print(f'base: {self.end_date.date()}')
-        numdays = (self.end_date - self.start_date).days
+        numdays = (self.end_date - self.start_date).days + 1
         date_list = [base - timezone.timedelta(days=x) for x in range(numdays)]
         self.win_percents = [WinPercent(user_id, DateService(date).start_of_day(), DateService(date).end_of_day()) for date in date_list]
 
