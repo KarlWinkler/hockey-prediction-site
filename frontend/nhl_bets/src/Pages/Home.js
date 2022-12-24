@@ -26,11 +26,34 @@ const Home = () => {
     setStats(data)
   }
 
+  /*
+  "by_score_deltas": [
+    {
+        "user_id": 1,
+        "start_date": "2022-12-17T00:00:00Z",
+        "end_date": "2022-12-24T00:00:00Z",
+        "total_bets": 51,
+        "delta": 1,
+        "total_wins_with_delta": 12,
+        "total_losses_with_delta": 8,
+        "win_percent": 0.23529411764705882
+*/
+
+  let scoreDeltas = stats?.by_score_deltas.map((score_delta, index) => {
+                      return {
+                        'Delta': score_delta.delta,
+                        'Wins': score_delta.total_wins_with_delta,
+                        'Losses': score_delta.total_losses_with_delta,
+                        'Win %': `${score_delta.win_percent * 100}%`
+                      }
+                    })
+
+
   return (
     <div className='Home-wrapper'>
       {stats == null ? '' :  <PieChart percent={stats.win_percent * 100} />}
       {stats == null ? '' :  <LineChart dataPoints={stats.win_percents || []} />}
-      {stats == null ? '' :  <Table title='Win Percentages' rows={null || [{'No Data': 'NaN'}]} />}
+      {stats == null ? '' :  <Table title='Win Percentages' rows={scoreDeltas || [{'No Data': 'NaN'}]} />}
       {console.log(stats)}
       <div className='date-range-selector'>
         <input type='date' onChange={ e => setFrom(e.target.value) } />
