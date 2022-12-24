@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 
 import PieChart from '../Components/PieChart'
 import LineChart from '../Components/LineChart'
+import Table from '../Components/Table'
 import '../styles/home.scss'
 
 const Home = () => {
@@ -29,6 +30,7 @@ const Home = () => {
     <div className='Home-wrapper'>
       {stats == null ? '' :  <PieChart percent={stats.win_percent * 100} />}
       {stats == null ? '' :  <LineChart dataPoints={stats.win_percents || []} />}
+      {stats == null ? '' :  <Table title='Win Percentages' rows={null || [{'No Data': 'NaN'}]} />}
       {console.log(stats)}
       <div className='date-range-selector'>
         <input type='date' onChange={ e => setFrom(e.target.value) } />
