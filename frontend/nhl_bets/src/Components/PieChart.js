@@ -3,7 +3,7 @@ import React, { useEffect } from 'react'
 
 import '../styles/pie_chart.scss'
 
-const PieChart = ({ percent }) => {
+const PieChart = ({ title, percent }) => {
 
   useEffect(() => {
     setPercent(percent)
@@ -29,6 +29,7 @@ const PieChart = ({ percent }) => {
   
   return (
     <div>
+      <h2 className='PieChart-title'>{title}</h2>
       <div className='PieChart'>
         <div className='PieChart-semi'></div>
       </div>
