@@ -1,5 +1,7 @@
 import React from 'react'
 
+import '../styles/table.scss'
+
 const Table = ({ title, rows }) => {
 
   let tableHeaders = () => {
@@ -40,7 +42,8 @@ const Table = ({ title, rows }) => {
 
 
   return (
-    <div>
+    <div className='Table-wrapper'>
+      <h2>{title}</h2>
       <table>
         <thead>
           {tableHeaders()}

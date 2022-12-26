@@ -44,16 +44,16 @@ const Home = () => {
                         'Delta': score_delta.delta,
                         'Wins': score_delta.total_wins_with_delta,
                         'Losses': score_delta.total_losses_with_delta,
-                        'Win %': `${score_delta.win_percent * 100}%`
+                        'Win %': `${(score_delta.win_percent * 100).toFixed(2)}%`
                       }
                     })
 
 
   return (
     <div className='Home-wrapper'>
-      {stats == null ? '' :  <PieChart percent={stats.win_percent * 100} />}
-      {stats == null ? '' :  <LineChart dataPoints={stats.win_percents || []} />}
-      {stats == null ? '' :  <Table title='Win Percentages' rows={scoreDeltas || [{'No Data': 'NaN'}]} />}
+      {stats == null ? '' :  <PieChart title='Overall win %' percent={stats.win_percent * 100} />}
+      {stats == null ? '' :  <LineChart title='Win % per Day' dataPoints={stats.win_percents || []} />}
+      {stats == null ? '' :  <Table title='Win % per score delta' rows={scoreDeltas || [{'No Data': 'NaN'}]} />}
       {console.log(stats)}
       <div className='date-range-selector'>
         <input type='date' onChange={ e => setFrom(e.target.value) } />

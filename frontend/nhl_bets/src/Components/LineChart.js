@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 
 import '../styles/line_chart.scss'
 
-const LineChart = ({ dataPoints }) => {
+const LineChart = ({ title, dataPoints }) => {
 
   useEffect(() => {
     drawDataPoints()
@@ -89,8 +89,11 @@ const LineChart = ({ dataPoints }) => {
   }
 
   return (
-    <div className='LineChart-wrapper'>
-      <div className='LineChart'>
+    <div className='LineChart-container'>
+      <h2 className='LineChart-title'>{title}</h2>
+      <div className='LineChart-wrapper'>
+        <div className='LineChart'>
+        </div>
       </div>
     </div>
   )
