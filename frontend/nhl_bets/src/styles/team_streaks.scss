@@ -1,3 +1,12 @@
+.TeamStreak-wrapper{
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  padding: 1em;
+  background-color: var(--colour-secondary-20);
+  border-radius: 8px;
+}
+
 .TeamStreak {
   display: grid;
   overflow: hidden;
