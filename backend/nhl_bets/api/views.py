@@ -150,7 +150,7 @@ def bet_stats(request):
     return Response({ **win_percent.toJSON(), **record_per_day.toJSON(), **by_score_deltas(request, date_from, date_to) }, status=200)
 
 def by_score_deltas(request, date_from, date_to):
-    score_delta_list = [ByScoreDelta(request.user.id, date_from, date_to, delta).toJSON() for delta in range(1, 6)]
+    score_delta_list = [ByScoreDelta(request.user.id, date_from, DateService(date_to).end_of_day(), delta).toJSON() for delta in range(1, 6)]
     return { 'by_score_deltas': score_delta_list }
 
 @api_view(('GET',))
