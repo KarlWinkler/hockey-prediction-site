@@ -1,0 +1,14 @@
+.TeamStreak {
+  display: grid;
+  overflow: hidden;
+  grid-template-columns: 1fr 1fr;
+  color: white;
+}
+
+.TeamStreak-count {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2em;
+  font-weight: bold;
+}
