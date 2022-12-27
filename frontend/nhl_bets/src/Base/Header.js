@@ -15,6 +15,10 @@ const Header = () => {
     
     window.location.href = `/games/${date}`
   }
+
+  let toTrends = () => {
+    window.location.href = '/trends'
+  }
   
   return (
     <div className='Header'>
@@ -23,6 +27,7 @@ const Header = () => {
       <div className='Header-links'>
         <div className='Header-link' onClick={toDashboard} >Dashboard</div>
         <div className='Header-link' onClick={toGames} >Games</div>
+        <div className='Header-link' onClick={toTrends} >Trends</div>
       </div>
     </div>
   )

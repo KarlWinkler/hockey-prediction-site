@@ -26,19 +26,6 @@ const Home = () => {
     setStats(data)
   }
 
-  /*
-  "by_score_deltas": [
-    {
-        "user_id": 1,
-        "start_date": "2022-12-17T00:00:00Z",
-        "end_date": "2022-12-24T00:00:00Z",
-        "total_bets": 51,
-        "delta": 1,
-        "total_wins_with_delta": 12,
-        "total_losses_with_delta": 8,
-        "win_percent": 0.23529411764705882
-*/
-
   let scoreDeltas = stats?.by_score_deltas.map((score_delta, index) => {
                       return {
                         'Delta': score_delta.delta,

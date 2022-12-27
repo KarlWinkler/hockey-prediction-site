@@ -34,7 +34,9 @@
   padding: 4px;
   &:hover {
     cursor: pointer;
-    color: var(--colour-primary);
+    background-color: var(--colour-primary);
+    color: white;
+    border-color: var(--colour-primary);
     transition: all .1s ease-in-out;
   }
 }

@@ -5,6 +5,7 @@ import{
 } from "react-router-dom";
 import Home from "./Pages/Home";
 import Games from "./Pages/Games";
+import Trends from "./Pages/Trends";
 import Admin from "./Pages/Admin";
 
 import Header from "./Base/Header";
@@ -19,11 +20,14 @@ function App() {
       <div className="app">
         <Header />
 
-        <Routes>
-          <Route path='/admin' element={<Admin />} />
-          <Route path='/' element={<Home />} />
-          <Route path='/games/:date' element={<Games />} />
-        </Routes>
+        <div className="app-wrapper">
+          <Routes>
+            <Route path='/admin' element={<Admin />} />
+            <Route path='/' element={<Home />} />
+            <Route path='/games/:date' element={<Games />} />
+            <Route path='/trends' element={<Trends />} />
+          </Routes>
+        </div>
 
         <Footer />
       </div>
