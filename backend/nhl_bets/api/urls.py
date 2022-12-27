@@ -13,4 +13,5 @@ urlpatterns = [
     path('bets/delete/<int:game>', views.delete_bet, name='bets'),
     path('bets', views.get_bets, name='bets'),
     path('bets/stats', views.bet_stats, name='bet_stats'),
+    path('bets/loss_streak', views.loss_streak, name='loss_streak'),
 ]
