@@ -8,6 +8,7 @@ from .services.win_percent import WinPercent
 from .services.record_by_day import RecordByDay
 from .services.by_score_delta import ByScoreDelta
 from .services.loss_streak import LossStreak
+from .services.win_streak import WinStreak
 from django.contrib.auth.models import User
 from .serializers.game_serializer import GameSerializer
 from .serializers.bet_serializer import BetSerializer
@@ -157,4 +158,10 @@ def by_score_deltas(request, date_from, date_to):
 def loss_streak(request):
     num_results=int(request.GET.get('num_results', 0))
     streaks = LossStreak(request.user, num_results).toJSON()
+    return Response(streaks, status=200)
+
+@api_view(('GET',))
+def win_streak(request):
+    num_results=int(request.GET.get('num_results', 0))
+    streaks = WinStreak(request.user, num_results).toJSON()
     return Response(streaks, status=200)
