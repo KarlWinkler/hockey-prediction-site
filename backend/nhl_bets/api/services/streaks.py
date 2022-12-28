@@ -40,7 +40,7 @@ class Streak:
     def toJSON(self):
         return {
             'user_id': self.user.id,
-            'loss_streaks': self.streak_to_json(),
+            'streaks': self.streak_to_json(),
         }
 
     def streak_to_json(self):
