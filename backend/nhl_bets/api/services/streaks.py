@@ -24,6 +24,11 @@ class Streak:
             return bet.game.home_team
         return bet.game.away_team
 
+    def other_team(self, bet):
+        if bet.pick == 'home':
+            return bet.game.away_team
+        return bet.game.home_team
+
     def no_active_streaks(self, streaks):
         if len(streaks) != Team.objects.count():
             return False
