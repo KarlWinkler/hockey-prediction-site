@@ -5,6 +5,14 @@
   padding: 1em;
   background-color: var(--colour-secondary-20);
   border-radius: 8px;
+
+  transition: height 0.2s ease-in;
+
+  &.expanded {
+    svg {
+      transform: rotate(180deg);
+    }
+  }
 }
 
 .TeamStreak {
@@ -32,6 +40,8 @@
 
   width: 50%;
 
+  transition: height 0.2s ease-in;
+
   svg {
     width: 1.5em;
     height: 1.5em;
@@ -46,15 +56,8 @@
     svg {
       color: white;
 
-      transition: color 0.2s ease-in-out;
-    }
-  }
-
-  &.expanded {
-    svg {
-      transform: rotate(180deg);
-
-      transition: transform 0.2s ease-in-out;
+      transition: transform 0.2s ease-in-out,
+      color 0.2s ease-in-out;
     }
   }
 }

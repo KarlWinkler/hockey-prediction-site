@@ -4,17 +4,18 @@ import {ReactComponent as DownArrow} from '../svg/down-arrow.svg';
 
 import '../styles/team_streaks.scss'
 
-const TeamStreaks = ({ classList, title, list }) => {
+const TeamStreaks = ({ classList, title, list, onClickMethod }) => {
   let teamList = () => {
-    console.log(list)
     if (list !== null) {
       return list.map((item, index) => {
-        return( 
-          <div key={index} className='TeamStreak'>
-            <Team id={item.team.id} name={item.team.name} icon={item.team.icon.image} />
-            <span className='TeamStreak-count'>{item.streak}</span>
-          </div>
-        )
+        if (item.streak > 1) {
+          return(
+            <div key={index} className='TeamStreak'>
+              <Team id={item.team.id} name={item.team.name} icon={item.team.icon.image} />
+              <span className='TeamStreak-count'>{item.streak}</span>
+            </div>
+          )
+        }
       })
     }
   }
@@ -23,7 +24,7 @@ const TeamStreaks = ({ classList, title, list }) => {
     <div className={`TeamStreak-wrapper ${classList}`}>
       <h2>{title}</h2>
       {teamList()}
-      <div className='TeamStreak-expand'><DownArrow /></div>
+      <div className='TeamStreak-expand' onClick={onClickMethod}><DownArrow /></div>
     </div>
   )
 }
