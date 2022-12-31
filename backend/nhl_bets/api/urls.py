@@ -16,4 +16,5 @@ urlpatterns = [
     path('bets/loss_streak', views.loss_streak, name='loss_streak'),
     path('bets/win_streak', views.win_streak, name='win_streak'),
     path('bets/lose_against_streak', views.lose_against_streak, name='lose_against_streak'),
+    path('bets/win_against_streak', views.win_against_streak, name='win_against_streak'),
 ]

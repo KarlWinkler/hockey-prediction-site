@@ -10,6 +10,7 @@ from .services.by_score_delta import ByScoreDelta
 from .services.loss_streak import LossStreak
 from .services.win_streak import WinStreak
 from .services.lose_against_streak import LoseAgainstStreak
+from .services.win_against_streak import WinAgainstStreak
 from django.contrib.auth.models import User
 from .serializers.game_serializer import GameSerializer
 from .serializers.bet_serializer import BetSerializer
@@ -171,4 +172,10 @@ def win_streak(request):
 def lose_against_streak(request):
     num_results=int(request.GET.get('num_results', 0))
     streaks = LoseAgainstStreak(request.user, num_results).toJSON()
+    return Response(streaks, status=200)
+
+@api_view(('GET',))
+def win_against_streak(request):
+    num_results=int(request.GET.get('num_results', 0))
+    streaks = WinAgainstStreak(request.user, num_results).toJSON()
     return Response(streaks, status=200)

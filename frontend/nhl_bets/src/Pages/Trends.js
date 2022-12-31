@@ -7,37 +7,28 @@ const Trends = () => {
   let [lossStreaks, setLossStreaks] = useState(null)
   let [winStreaks, setWinStreaks] = useState(null)
   let [loseAgainstStreaks, setLoseAgainstStreaks] = useState(null)
+  let [winAgainstStreaks, setWinAgainstStreaks] = useState(null)
 
   useEffect(() => {
-    getLossStreaks()
-    getWinStreaks()
-    getLoseAgainstStreaks()
+    getStreaks('/api/bets/loss_streak?num_results=3', setLossStreaks)
+    getStreaks('/api/bets/win_streak?num_results=3', setWinStreaks)
+    getStreaks('/api/bets/lose_against_streak?num_results=3', setLoseAgainstStreaks)
+    getStreaks('/api/bets/win_against_streak?num_results=3', setWinAgainstStreaks)
   }, [])
 
-  let getLossStreaks = async () => {
-    let response = await fetch('/api/bets/loss_streak?num_results=3')
+  let getStreaks = async (url, setState) => {
+    let response = await fetch(url)
     let data = await response.json()
-    setLossStreaks(data.streaks)
-  }
-
-  let getWinStreaks = async () => {
-    let response = await fetch('/api/bets/win_streak?num_results=3')
-    let data = await response.json()
-    setWinStreaks(data.streaks)
-  }
-
-  let getLoseAgainstStreaks = async () => {
-    let response = await fetch('/api/bets/lose_against_streak?num_results=3')
-    let data = await response.json()
-    setLoseAgainstStreaks(data.streaks)
+    setState(data.streaks)
   }
 
   return (
     <div className='Trends'>
       <h1>Trends</h1>
-      <TeamStreaks title={'You keep picking these teams wrong'} list={lossStreaks} />
-      <TeamStreaks title={'You keep picking these teams correctly'} list={winStreaks} />
+      <TeamStreaks title={'The last few times you picked this team they lost'} list={lossStreaks} />
+      <TeamStreaks title={'The last few times you picked this team they won'} list={winStreaks} />
       <TeamStreaks title={'You have bet against these teams and lost'} list={loseAgainstStreaks} />
+      <TeamStreaks title={'You have bet against these teams and won'} list={winAgainstStreaks} />
     </div>
   )
 }
