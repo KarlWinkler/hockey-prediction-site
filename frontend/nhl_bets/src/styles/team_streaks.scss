@@ -21,3 +21,40 @@
   font-size: 2em;
   font-weight: bold;
 }
+
+.TeamStreak-expand {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5em;
+  font-weight: bold;
+  cursor: pointer;
+
+  width: 50%;
+
+  svg {
+    width: 1.5em;
+    height: 1.5em;
+    margin-left: 0.5em;
+    color: black;
+
+    transition: transform 0.2s ease-in-out,
+                color 0.2s ease-in-out;
+  }
+
+  &:hover {
+    svg {
+      color: white;
+
+      transition: color 0.2s ease-in-out;
+    }
+  }
+
+  &.expanded {
+    svg {
+      transform: rotate(180deg);
+
+      transition: transform 0.2s ease-in-out;
+    }
+  }
+}

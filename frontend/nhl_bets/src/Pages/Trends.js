@@ -25,10 +25,10 @@ const Trends = () => {
   return (
     <div className='Trends'>
       <h1>Trends</h1>
-      <TeamStreaks title={'The last few times you picked this team they lost'} list={lossStreaks} />
-      <TeamStreaks title={'The last few times you picked this team they won'} list={winStreaks} />
-      <TeamStreaks title={'You have bet against these teams and lost'} list={loseAgainstStreaks} />
-      <TeamStreaks title={'You have bet against these teams and won'} list={winAgainstStreaks} />
+      <TeamStreaks classList={'LossStreak'} title={'The last few times you picked this team they lost'} list={lossStreaks} />
+      <TeamStreaks classList={'WinStreak'} title={'The last few times you picked this team they won'} list={winStreaks} />
+      <TeamStreaks classList={'LossAgainstStreak'} title={'You have bet against these teams and lost'} list={loseAgainstStreaks} />
+      <TeamStreaks classList={'WinAgainstStreak'} title={'You have bet against these teams and won'} list={winAgainstStreaks} />
     </div>
   )
 }
