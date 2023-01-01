@@ -9,7 +9,10 @@ const DateBar = ({ date }) => {
     let month = date.split('-')[1]
     let day = date.split('-')[2]
 
-    return year + '-' + month + '-' + (parseInt(day) + offset)
+    let parsedDate= new Date(`${month}/${day}/${year}`)
+    let offsetDate = new Date(parsedDate.getTime() + offset * 24 * 60 * 60 * 1000)
+
+    return offsetDate.toISOString().split('T')[0]
   }
 
   let goToDate = (e) => {
