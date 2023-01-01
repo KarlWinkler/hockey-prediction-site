@@ -1,4 +1,6 @@
 import React from 'react'
+import LoginSignUpPrompt from '../Components/LoginSignUpPrompt'
+
 import '../styles/header.scss'
 
 const Header = () => {
@@ -19,6 +21,12 @@ const Header = () => {
   let toTrends = () => {
     window.location.href = '/trends'
   }
+
+  let openModal = () => {
+    document.querySelector('.Modal').classList.add('active')
+    document.querySelector('body').classList.add('modalOpen')
+  }
+
   
   return (
     <div className='Header'>
@@ -28,6 +36,8 @@ const Header = () => {
         <div className='Header-link' onClick={toDashboard} >Dashboard</div>
         <div className='Header-link' onClick={toGames} >Games</div>
         <div className='Header-link' onClick={toTrends} >Trends</div>
+        <a className='Footer-loginButton' onClick={openModal}>Login</a>
+        <LoginSignUpPrompt />
       </div>
     </div>
   )

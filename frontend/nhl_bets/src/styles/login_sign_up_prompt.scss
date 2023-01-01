@@ -1,0 +1,16 @@
+.LoginSignUpPrompt-buttons {
+  display: flex;
+  justify-content: flex-start;
+  gap: 16px;
+}
+
+.loginSignUpModal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  color: black;
+  z-index: 100;
+}

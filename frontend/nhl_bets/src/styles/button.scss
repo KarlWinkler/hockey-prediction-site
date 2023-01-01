@@ -1,0 +1,26 @@
+.Button {
+  text-decoration: none;
+  border: 2px solid var(--colour-primary);
+  border-radius: 30px;
+  padding: 10px 20px;
+  background-color: var(--colour-primary);
+  color: #fff;
+  cursor: pointer;
+}
+
+.Button:hover {
+  background-color: var(--colour-primary-20);
+  color: var(--colour-primary);
+
+  transition: all 0.12s ease-in;
+}
+
+.Button--secondary {
+  border: 2px solid var(--colour-secondary);
+  background-color: var(--colour-secondary);
+}
+
+.Button--secondary:hover {
+  background-color: var(--colour-secondary-20);
+  color: var(--colour-secondary);
+}
