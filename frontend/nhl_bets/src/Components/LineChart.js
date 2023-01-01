@@ -74,7 +74,6 @@ const LineChart = ({ title, dataPoints }) => {
       // }
     })
     lineChart.style.width = dataPoints.length * 20 + 'px'
-    console.log(dataPoints.length * 20)
   }
 
   let drawLines = () => {

@@ -154,6 +154,9 @@ def bet_stats(request):
 
 def by_score_deltas(request, date_from, date_to):
     score_delta_list = [ByScoreDelta(request.user.id, date_from, DateService(date_to).end_of_day(), delta).toJSON() for delta in range(1, 6)]
+    gt_range = ByScoreDelta(request.user.id, date_from, DateService(date_to).end_of_day(), 6, 'gte').toJSON()
+
+    score_delta_list.append(gt_range)
     return { 'by_score_deltas': score_delta_list }
 
 @api_view(('GET',))

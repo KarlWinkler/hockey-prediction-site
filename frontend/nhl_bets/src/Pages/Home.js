@@ -26,18 +26,27 @@ const Home = () => {
     setStats(data)
   }
 
+  let conditionalSign = (conditional) => {
+    if (conditional === 'gt' || conditional === 'gte') {
+      return '+'
+    } else if (conditional === 'lt' || conditional === 'lte') {
+      return '-'
+    } else {
+      return ''
+    }
+  }
+
   let scoreDeltas = stats?.by_score_deltas.map((score_delta, index) => {
                       return {
-                        'Delta': score_delta.delta,
+                        'Delta': `${score_delta.delta + conditionalSign(score_delta.conditional)}`,
                         'Wins': score_delta.total_wins_with_delta,
                         'Losses': score_delta.total_losses_with_delta,
                         'Win %': `${(score_delta.win_percent * 100).toFixed(2)}%`
                       }
                     })
 
-
   return (
-    <div className='Home-wrapper'>
+    <div className='Home-wrapper Dashboard-wrapper'>
       {stats == null ? '' :  <PieChart title='Overall win %' percent={stats.win_percent * 100} />}
       {stats == null ? '' :  <LineChart title='Win % per Day' dataPoints={stats.win_percents || []} />}
       {stats == null ? '' :  <Table title='Win % per score delta' rows={scoreDeltas || [{'No Data': 'NaN'}]} />}

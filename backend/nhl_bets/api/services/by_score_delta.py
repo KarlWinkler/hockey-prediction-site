@@ -1,16 +1,15 @@
 from ..models import Bet
-from django.utils import timezone
-from .date_service import DateService
 
 class ByScoreDelta:
-    def __init__(self, user_id, start_date, end_date, delta):
+    def __init__(self, user_id, start_date, end_date, delta, conditional='eq'):
         self.user_id = user_id
         self.start_date = start_date
         self.end_date = end_date
         self.delta = delta
+        self.conditional = conditional
         self.bets = Bet.objects.filter(user_id=user_id, game__status='Final', game__date__range=(start_date, end_date))
         self.total_bets = self.bets.count()
-        bets_at_delta = [bet for bet in self.bets if abs(bet.game.away_score - bet.game.home_score) == delta]
+        bets_at_delta = [bet for bet in self.bets if self.valid_condition(bet, delta, conditional)]
         self.total_bets_at_delta = len(bets_at_delta)
 
         self.bets = bets_at_delta
@@ -32,4 +31,19 @@ class ByScoreDelta:
             'total_wins_with_delta': self.total_wins,
             'total_losses_with_delta': self.total_losses,
             'win_percent': self.win_percent,
+            'conditional': self.conditional
         }
+
+    def valid_condition(self, bet, delta, conditional):
+        if conditional == 'eq':
+          return abs(bet.game.away_score - bet.game.home_score) == delta
+        elif conditional == 'gt':
+          return abs(bet.game.away_score - bet.game.home_score) > delta
+        elif conditional == 'lt':
+          return abs(bet.game.away_score - bet.game.home_score) < delta
+        elif conditional == 'gte':
+          return abs(bet.game.away_score - bet.game.home_score) >= delta
+        elif conditional == 'lte':
+          return abs(bet.game.away_score - bet.game.home_score) <= delta
+        else:
+          return False

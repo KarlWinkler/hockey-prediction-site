@@ -6,9 +6,8 @@ const Table = ({ title, rows }) => {
 
   let tableHeaders = () => {
     let headers = Object.keys(rows[0]).map((key, index) => {
-      console.log('headers', key, index)
       return (
-        <th>{key}</th>
+        <th key={index}>{key}</th>
       )
     })
     return (
@@ -20,9 +19,8 @@ const Table = ({ title, rows }) => {
 
   let tableRows = () => {
     let mappedRows = rows.map((row, index) => {
-      console.log('table rows', row, index)
       return (
-        <tr>
+        <tr key={index}>
           {tableValues(row)}
         </tr>
       )
@@ -32,9 +30,8 @@ const Table = ({ title, rows }) => {
 
   let tableValues = (row) => {
     let values = Object.values(row).map((value, index) => {
-      console.log('table values', value, index)
       return (
-        <td>{value}</td>
+        <td key={index}>{value}</td>
       )
     })
     return values
