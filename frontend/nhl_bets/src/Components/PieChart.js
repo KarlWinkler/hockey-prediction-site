@@ -3,38 +3,55 @@ import React, { useEffect } from 'react'
 
 import '../styles/pie_chart.scss'
 
-const PieChart = ({ title, percent }) => {
+const PieChart = ({ title, percents }) => {
 
   useEffect(() => {
-    setPercent(percent)
+    setPercent(percents)
   })
 
-  let setPercent = (percent) => {
-    let chart = document.querySelector('.PieChart-semi');
+  let setPercent = (percents) => {
+    let chart = document.querySelector('.PieChart')
+    let current_percent = 0
 
-    let deg = 360 * (percent / 100);
+    let gradient = 'conic-gradient('
 
-    if (percent >= 50) {
-      chart.classList.add('gteq50');
-      deg = 360 - deg;
+    percents.map((percent, index) => {
+
+      gradient += `${getColour(index)} ${current_percent}%, `
+
+      current_percent += percent
+      gradient += `${getColour(index)} ${current_percent}%, `
+
+    })
+
+    gradient += `var(--colour-incorrect) ${current_percent}%, `
+
+    chart.style.backgroundImage = gradient.slice(0, -2) + ')'
+    console.log(gradient.slice(0, -2) + ')')
+
+    // current_percent
+  }
+
+  let getColour = (index) => {
+    let color1 = 'var(--colour-correct)'
+    let color2 = '#FF6E31'
+    let color3 = 'hsl(120, 100%, 50%)'
+
+    if (index === 0) {
+      return color1
+    } else if (index === 1) {
+      return color2
+    } else if (index === 2) {
+      return color3
     }
-    else {
-      chart.classList.remove('gteq50');
-      deg = 180 - deg;
-    }
-
-    // console.log(`rotate(${deg})`, chart)
-    chart.style.transform = `rotate(${deg}deg)`;
   }
   
   return (
     <div>
       <h2 className='PieChart-title'>{title}</h2>
-      <div className='PieChart'>
-        <div className='PieChart-semi'></div>
-      </div>
+      <div className='PieChart' />
       <div className='PieChart-value'>
-        <span>{percent.toFixed(2)}%</span>
+        <span>{percents[0].toFixed(2)}%</span>
       </div>
     </div>
   )

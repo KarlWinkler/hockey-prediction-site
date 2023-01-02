@@ -47,7 +47,7 @@ const Home = () => {
 
   return (
     <div className='Home-wrapper Dashboard-wrapper'>
-      {stats == null ? '' :  <PieChart title='Overall win %' percent={stats.win_percent * 100} />}
+      {stats == null ? '' :  <PieChart title='Overall win %' percents={[stats.win_percent * 100]} />}
       {stats == null ? '' :  <LineChart title='Win % per Day' dataPoints={stats.win_percents || []} />}
       {stats == null ? '' :  <Table title='Win % per score delta' rows={scoreDeltas || [{'No Data': 'NaN'}]} />}
       {console.log(stats)}
