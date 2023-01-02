@@ -9,6 +9,7 @@ from .services.record_by_day import RecordByDay
 from .services.by_score_delta import ByScoreDelta
 from .services.loss_streak import LossStreak
 from .services.win_streak import WinStreak
+from .services.extra_time_percent import ExtraTimePercent
 from .services.lose_against_streak import LoseAgainstStreak
 from .services.win_against_streak import WinAgainstStreak
 from django.contrib.auth.models import User
@@ -156,7 +157,8 @@ def bet_stats(request):
     print(date_from, date_to)
     win_percent = WinPercent(request.user.id, date_from, DateService(date_to).end_of_day())
     record_per_day = RecordByDay(request.user.id, date_from, date_to)
-    return Response({ **win_percent.toJSON(), **record_per_day.toJSON(), **by_score_deltas(request, date_from, date_to) }, status=200)
+    et_percent = ExtraTimePercent(request.user.id, date_from, DateService(date_to).end_of_day())
+    return Response({ **win_percent.toJSON(), **record_per_day.toJSON(), **by_score_deltas(request, date_from, date_to), **et_percent.toJSON() }, status=200)
 
 def by_score_deltas(request, date_from, date_to):
     score_delta_list = [ByScoreDelta(request.user.id, date_from, DateService(date_to).end_of_day(), delta).toJSON() for delta in range(1, 6)]
