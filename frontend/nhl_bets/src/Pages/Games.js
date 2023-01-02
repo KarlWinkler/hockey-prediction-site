@@ -76,6 +76,8 @@ const Games = () => {
               <span className='score'>{game.home_score}</span>
               vs.
               <span className='score'>{game.away_score}</span>
+              <span className=''>{resultInToString(game.result_in)}</span>
+
             </span>
 
             <Team id={`team_${away_team.id}`} name={away_team.name} icon={away_team.icon.image} />
@@ -85,9 +87,20 @@ const Games = () => {
     }
   }
 
+  let resultInToString = (result_in) => {
+    if (result_in === 0) {
+      return ''
+    }
+    else if (result_in === 1) {
+      return 'OT'
+    }
+    else if (result_in === 2) {
+      return 'SO'
+    }
+  }
+
   let updateGamesBets = async (e) => {
     if (bets !== null) {
-      console.log(bets)
       bets.forEach(bet => {
         let game = document.getElementById(`game_${bet.game}`)
         if (game !== null) {
