@@ -52,7 +52,7 @@ def get_games_by_date(request, date):
 
 @api_view(('POST',))
 def update_games(request, date=''):
-    games = requests.get(f'https://statsapi.web.nhl.com/api/v1/schedule?date={date}')
+    games = requests.get(f'https://statsapi.web.nhl.com/api/v1/schedule?date={date}&expand=schedule.linescore')
     for date in games.json()['dates']:
         for game in date['games']:
             create_or_update_game(game)
@@ -69,6 +69,9 @@ def create_or_update_game(game):
         _game.home_score=game['teams']['home']['score']
         _game.home_team=Team.objects.get(nhl_id=game['teams']['home']['team']['id'])
         _game.away_team=Team.objects.get(nhl_id=game['teams']['away']['team']['id'])
+        
+        if _game.status == 'Final':
+          _game.result_in = result_in_game(game)
     else:
         _game = Game.objects.create(
             game_id=game['gamePk'],
@@ -80,6 +83,9 @@ def create_or_update_game(game):
     
     _game.save()
     return _game
+
+def result_in_game(game):
+    return game['linescore']['currentPeriod'] - 3
 
 @api_view(('POST',))
 def update_bets(request, game, pick):
