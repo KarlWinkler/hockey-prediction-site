@@ -3,7 +3,7 @@ import LoginSignUpPrompt from '../Components/LoginSignUpPrompt'
 
 import '../styles/header.scss'
 
-const Header = () => {
+const Header = ({ user }) => {
 
   let toDashboard = () => {
     window.location.href = '/'
@@ -27,6 +27,15 @@ const Header = () => {
     document.querySelector('body').classList.add('modalOpen')
   }
 
+  let userFeature = () => {
+    if (user) {
+      return (<div>{user.username}</div>)
+    }
+    else {
+     return(<a className='Footer-loginButton' onClick={openModal}>Login</a>)
+    }
+  }
+
   
   return (
     <div className='Header'>
@@ -36,7 +45,7 @@ const Header = () => {
         <div className='Header-link' onClick={toDashboard} >Dashboard</div>
         <div className='Header-link' onClick={toGames} >Games</div>
         <div className='Header-link' onClick={toTrends} >Trends</div>
-        <a className='Footer-loginButton' onClick={openModal}>Login</a>
+        {userFeature()}
         <LoginSignUpPrompt />
       </div>
     </div>
