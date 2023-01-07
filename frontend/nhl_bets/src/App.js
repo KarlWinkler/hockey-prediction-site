@@ -11,6 +11,7 @@ import React, { useEffect, useState } from 'react'
 import Home from "./Pages/Home";
 import Games from "./Pages/Games";
 import Trends from "./Pages/Trends";
+import Teams from "./Pages/Teams";
 import Admin from "./Pages/Admin";
 import SignUp from "./Pages/SignUp";
 import Login from "./Pages/Login";
@@ -50,6 +51,7 @@ function App() {
             <Route path='/' element={<Home />} />
             <Route path='/games/:date' element={<Games />} />
             <Route path='/trends' element={<Trends />} />
+            <Route path='/teams' element={<Teams />} />
             <Route path='signup' element={<SignUp />} />
             <Route path='login' element={<Login />} />
           </Routes>

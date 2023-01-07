@@ -23,6 +23,10 @@ const Header = ({ user }) => {
     window.location.href = '/trends'
   }
 
+  let toTeams = () => {
+    window.location.href = '/teams'
+  }
+
   let openModal = () => {
     document.querySelector('.Modal').classList.add('active')
     document.querySelector('body').classList.add('modalOpen')
@@ -64,6 +68,7 @@ const Header = ({ user }) => {
         <div className='Header-link' onClick={toDashboard} >Dashboard</div>
         <div className='Header-link' onClick={toGames} >Games</div>
         <div className='Header-link' onClick={toTrends} >Trends</div>
+        <div className='Header-link' onClick={toTeams} >Teams</div>
         {userFeature()}
         <LoginSignUpPrompt />
       </div>

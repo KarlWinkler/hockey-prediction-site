@@ -1,0 +1,35 @@
+.Teams {
+  display: grid;
+  justify-items: center;
+  align-items: center;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  margin: 0 auto;
+  padding-top: 2em;
+  width: 100%;
+  color: white;
+
+  div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1em;
+
+    &:hover {
+      cursor: pointer;
+      background-color: rgba($color: white, $alpha: .2);
+    }
+  }
+
+  img {
+    display: flex;
+    width: 4em;
+    height: 4em;
+  }
+
+  span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
