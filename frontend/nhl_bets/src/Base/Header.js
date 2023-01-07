@@ -1,6 +1,7 @@
 import React from 'react'
 import LoginSignUpPrompt from '../Components/LoginSignUpPrompt'
 
+import getCookie from '../Extras/GetCookie'
 import '../styles/header.scss'
 
 const Header = ({ user }) => {
@@ -27,9 +28,27 @@ const Header = ({ user }) => {
     document.querySelector('body').classList.add('modalOpen')
   }
 
+  let logout = () => {
+    fetch('/auth/logout', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json',
+                  'X-CSRFToken': getCookie('csrftoken') },
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log(data)
+      window.location.reload()
+    })
+  }
+
   let userFeature = () => {
     if (user) {
-      return (<div>{user.username}</div>)
+      return (
+        <div>
+          {user.username}
+          <a className='Footer-loginButton' onClick={logout}>Log Out</a>
+        </div>
+      )
     }
     else {
      return(<a className='Footer-loginButton' onClick={openModal}>Login</a>)
