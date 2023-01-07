@@ -14,7 +14,7 @@ const LoginForm = () => {
   }
   
   let loginUser = async (e, body) => {
-    let response = await fetch('/api/auth/login', {
+    let response = await fetch('/auth/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
