@@ -12,6 +12,7 @@ from .services.streaks.loss_streak import LossStreak
 from .services.streaks.win_streak import WinStreak
 from .services.streaks.lose_against_streak import LoseAgainstStreak
 from .services.streaks.win_against_streak import WinAgainstStreak
+from .services.team_stats.team_win_percent import TeamWinPercent
 from .services.date_service import DateService
 from django.contrib.auth.models import User
 from .serializers.team_serializer import TeamSerializer
@@ -32,7 +33,13 @@ def get_teams(request):
 
 @api_view(('GET',))
 def get_team_stats(request, id):
-    return Response('one Team', status=200)
+    team_id = id
+    user = request.user
+    date_from, date_to = get_date_range(request)
+    team = get_object_or_404(Team, pk=id)
+    serialized_team = TeamSerializer(team, many=False)
+    win_percent = TeamWinPercent(user.id, team_id, date_from, date_to).toJSON()
+    return Response({**serialized_team.data, **win_percent}, status=200)
 
 @api_view(('GET',))
 def get_games(request):
