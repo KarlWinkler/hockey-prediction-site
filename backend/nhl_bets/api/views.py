@@ -13,6 +13,7 @@ from .services.extra_time_percent import ExtraTimePercent
 from .services.lose_against_streak import LoseAgainstStreak
 from .services.win_against_streak import WinAgainstStreak
 from django.contrib.auth.models import User
+from .serializers.team_serializer import TeamSerializer
 from .serializers.game_serializer import GameSerializer
 from .serializers.bet_serializer import BetSerializer
 import requests
@@ -25,8 +26,9 @@ from .services.date_service import DateService
 # Create your views here.
 @api_view(('GET',))
 def get_teams(request):
-  teams = requests.get('https://statsapi.web.nhl.com/api/v1/teams')
-  return Response(teams.json(), status=200)
+  teams = Team.objects.all()
+  serializer = TeamSerializer(teams, many=True)
+  return Response(serializer.data, status=200)
 
 @api_view(('GET',))
 def get_team(request, id):
