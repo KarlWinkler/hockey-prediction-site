@@ -1,4 +1,4 @@
-from ..models import Bet, Game
+from ...models import Bet, Game
 
 class ExtraTimePercent:
     def __init__(self, user_id, start_date, end_date):

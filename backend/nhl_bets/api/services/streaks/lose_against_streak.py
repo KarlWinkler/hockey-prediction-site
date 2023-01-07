@@ -1,6 +1,6 @@
-from ..models import Bet
-from ..models import Team
-from ..serializers.team_serializer import TeamSerializer
+from ...models import Bet
+from ...models import Team
+from ...serializers.team_serializer import TeamSerializer
 
 from .streaks import Streak
 class LoseAgainstStreak(Streak):

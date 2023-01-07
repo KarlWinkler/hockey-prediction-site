@@ -1,6 +1,6 @@
 from .win_percent import WinPercent
 from django.utils import timezone
-from .date_service import DateService
+from ..date_service import DateService
 
 class RecordByDay:
     def __init__(self, user_id, start_date, end_date):

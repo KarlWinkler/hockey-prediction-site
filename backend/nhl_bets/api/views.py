@@ -4,14 +4,15 @@ from rest_framework.response import Response
 from .decorators.timezone import with_timezone
 from django.utils.dateparse import parse_datetime
 from .models import Game, Team, Bet
-from .services.win_percent import WinPercent
-from .services.record_by_day import RecordByDay
-from .services.by_score_delta import ByScoreDelta
-from .services.loss_streak import LossStreak
-from .services.win_streak import WinStreak
-from .services.extra_time_percent import ExtraTimePercent
-from .services.lose_against_streak import LoseAgainstStreak
-from .services.win_against_streak import WinAgainstStreak
+from .services.bet_stats.win_percent import WinPercent
+from .services.bet_stats.extra_time_percent import ExtraTimePercent
+from .services.bet_stats.record_by_day import RecordByDay
+from .services.bet_stats.by_score_delta import ByScoreDelta
+from .services.streaks.loss_streak import LossStreak
+from .services.streaks.win_streak import WinStreak
+from .services.streaks.lose_against_streak import LoseAgainstStreak
+from .services.streaks.win_against_streak import WinAgainstStreak
+from .services.date_service import DateService
 from django.contrib.auth.models import User
 from .serializers.team_serializer import TeamSerializer
 from .serializers.game_serializer import GameSerializer
@@ -20,7 +21,6 @@ import requests
 from datetime import datetime
 from datetime import timedelta
 from django.utils import timezone
-from .services.date_service import DateService
 
 
 # Create your views here.
@@ -31,7 +31,7 @@ def get_teams(request):
   return Response(serializer.data, status=200)
 
 @api_view(('GET',))
-def get_team(request, id):
+def get_team_stats(request, id):
     return Response('one Team', status=200)
 
 @api_view(('GET',))

@@ -1,4 +1,4 @@
-from ..models import Bet
+from ...models import Bet
 
 class ByScoreDelta:
     def __init__(self, user_id, start_date, end_date, delta, conditional='eq'):
