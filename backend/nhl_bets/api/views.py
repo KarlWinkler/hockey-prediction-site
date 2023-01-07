@@ -143,20 +143,8 @@ def delete_bet(request, game):
 @with_timezone
 @api_view(('GET',))
 def bet_stats(request):
-    date_from=request.GET.get('from', None)
-    date_to=request.GET.get('to', None)
-    if date_to == '':
-        date_to = timezone.localdate().strftime('%Y-%m-%d')
-    if date_from == '':
-        date_from = (parse_datetime(date_to) - timedelta(days=7)).strftime('%Y-%m-%d')
-
-    date_from=timezone.make_aware(datetime.strptime(date_from, '%Y-%m-%d'))
-    date_to= timezone.make_aware(datetime.strptime(date_to, '%Y-%m-%d'))
     
-    if date_to < date_from:
-        date_from, date_to = date_to, date_from
-    
-    print(date_from, date_to)
+    date_from, date_to = get_date_range(request)
     win_percent = WinPercent(request.user.id, date_from, DateService(date_to).end_of_day())
     record_per_day = RecordByDay(request.user.id, date_from, date_to)
     et_percent = ExtraTimePercent(request.user.id, date_from, DateService(date_to).end_of_day())
@@ -192,3 +180,19 @@ def win_against_streak(request):
     num_results=int(request.GET.get('num_results', 0))
     streaks = WinAgainstStreak(request.user, num_results).toJSON()
     return Response(streaks, status=200)
+
+def get_date_range(request):
+    date_from=request.GET.get('from', '')
+    date_to=request.GET.get('to', '')
+    if date_to == '':
+        date_to = timezone.localdate().strftime('%Y-%m-%d')
+    if date_from == '':
+        date_from = (parse_datetime(date_to) - timedelta(days=7)).strftime('%Y-%m-%d')
+
+    date_from=timezone.make_aware(datetime.strptime(date_from, '%Y-%m-%d'))
+    date_to= timezone.make_aware(datetime.strptime(date_to, '%Y-%m-%d'))
+
+    if date_to < date_from:
+        date_from, date_to = date_to, date_from
+
+    return date_from, date_to
