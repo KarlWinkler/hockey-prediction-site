@@ -26,7 +26,7 @@ from .services.date_service import DateService
 # Create your views here.
 @api_view(('GET',))
 def get_teams(request):
-  teams = Team.objects.all()
+  teams = Team.objects.all().order_by('name')
   serializer = TeamSerializer(teams, many=True)
   return Response(serializer.data, status=200)
 
