@@ -12,6 +12,7 @@ import Home from "./Pages/Home";
 import Games from "./Pages/Games";
 import Trends from "./Pages/Trends";
 import Teams from "./Pages/Teams";
+import TeamStats from "./Pages/TeamStats";
 import Admin from "./Pages/Admin";
 import SignUp from "./Pages/SignUp";
 import Login from "./Pages/Login";
@@ -52,6 +53,7 @@ function App() {
             <Route path='/games/:date' element={<Games />} />
             <Route path='/trends' element={<Trends />} />
             <Route path='/teams' element={<Teams />} />
+            <Route path='/teams/:id' element={<TeamStats />} />
             <Route path='signup' element={<SignUp />} />
             <Route path='login' element={<Login />} />
           </Routes>
