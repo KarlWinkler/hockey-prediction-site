@@ -15,9 +15,11 @@ from .services.streaks.win_against_streak import WinAgainstStreak
 from .services.team_stats.team_win_percent import TeamWinPercent
 from .services.date_service import DateService
 from django.contrib.auth.models import User
+from .models import User as AppUser
 from .serializers.team_serializer import TeamSerializer
 from .serializers.game_serializer import GameSerializer
 from .serializers.bet_serializer import BetSerializer
+from .serializers.user_serializer import UserSerializer
 import requests
 from datetime import datetime
 from datetime import timedelta
@@ -190,6 +192,47 @@ def win_against_streak(request):
     num_results=int(request.GET.get('num_results', 0))
     streaks = WinAgainstStreak(request.user, num_results).toJSON()
     return Response(streaks, status=200)
+
+@api_view(('POST',))
+def set_favourite_team(request):
+    if request.user.id is None:
+        return Response({'message': 'not logged in'}, status=401)
+
+    team_id = request.data['team_id']
+    user = create_or_get_app_user(request.user)
+
+    user.favourite_team_id = team_id
+    user.save()
+
+    serializer = UserSerializer(user)
+    return Response(serializer.data, status=200)
+
+@api_view(('GET',))
+def get_user(request):
+    if request.user.id is None:
+        return Response({'message': 'not logged in'}, status=401)
+
+    user = create_or_get_app_user(request.user)
+
+    if user.favourite_team is None:
+        return Response({'message': 'no favourite team set'}, status=200)
+
+    serializer = UserSerializer(user)
+    return Response(serializer.data, status=200)
+
+def create_or_get_app_user(user):
+    '''
+      tries to find an existing user, if not found, creates a new one
+    '''
+    app_user = AppUser.objects.filter(user_id=user.id)
+    if app_user.exists():
+        app_user = app_user[0]
+    else:
+        app_user = AppUser.objects.create(
+            user=user,
+        )
+    app_user.save()
+    return app_user
 
 def get_date_range(request):
     date_from=request.GET.get('from', '')
