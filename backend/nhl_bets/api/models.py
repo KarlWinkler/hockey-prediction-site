@@ -20,6 +20,13 @@ class Team(models.Model):
     def __str__(self):
         return self.name
 
+class User(models.Model):
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    favourite_team = models.ForeignKey(Team, on_delete=models.PROTECT)
+
+    def __str__(self):
+        return self.user.username
+
 class Game(models.Model):
     date = models.DateTimeField()
     game_id = models.IntegerField()
