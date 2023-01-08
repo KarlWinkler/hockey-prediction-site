@@ -22,7 +22,7 @@ class Team(models.Model):
 
 class User(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    favourite_team = models.ForeignKey(Team, on_delete=models.PROTECT)
+    favourite_team = models.ForeignKey(Team, on_delete=models.PROTECT, blank=True, null=True)
 
     def __str__(self):
         return self.user.username
