@@ -29,6 +29,7 @@ class Game(models.Model):
     home_score = models.IntegerField(blank=True, null=True)
     away_score = models.IntegerField(blank=True, null=True)
     result_in = models.IntegerField(blank=True, null=True) # 0 = regulation, 1 = overtime, 2 = shootout
+    season = models.CharField(max_length=50)
 
     @property
     def winner(self):

@@ -78,6 +78,7 @@ def create_or_update_game(game):
         _game.home_score=game['teams']['home']['score']
         _game.home_team=Team.objects.get(nhl_id=game['teams']['home']['team']['id'])
         _game.away_team=Team.objects.get(nhl_id=game['teams']['away']['team']['id'])
+        _game.season=game['season']
         
         if _game.status == 'Final':
           _game.result_in = result_in_game(game)
@@ -87,7 +88,10 @@ def create_or_update_game(game):
             date=timezone_aware_date,
             status=game['status']['detailedState'],
             home_team=Team.objects.get(nhl_id=game['teams']['home']['team']['id']),
-            away_team=Team.objects.get(nhl_id=game['teams']['away']['team']['id'])
+            away_team=Team.objects.get(nhl_id=game['teams']['away']['team']['id']),
+            away_score=game['teams']['away']['score'],
+            home_score=game['teams']['home']['score'],
+            season=game['season']
         )
     
     _game.save()
