@@ -35,10 +35,9 @@ def get_teams(request):
 def get_team_stats(request, id):
     team_id = id
     user = request.user
-    date_from, date_to = get_date_range(request)
     team = get_object_or_404(Team, pk=id)
     serialized_team = TeamSerializer(team, many=False)
-    win_percent = TeamWinPercent(user.id, team_id, date_from, date_to).toJSON()
+    win_percent = TeamWinPercent(user.id, team_id).toJSON()
     return Response({**serialized_team.data, **win_percent}, status=200)
 
 @api_view(('GET',))
