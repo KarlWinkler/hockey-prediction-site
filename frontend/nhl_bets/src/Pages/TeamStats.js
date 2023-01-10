@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
+import Stats from '../Components/TeamsPage/Stats'
+import SetFavourite from '../Components/TeamsPage/SetFavourite'
 
 const TeamStats = () => {
   let { id } = useParams()
@@ -17,10 +19,8 @@ const TeamStats = () => {
 
   return (
     <div>
-      <h1>{stats?.name} Stats</h1>
-      <p>bets: {stats?.total_bets}</p>
-      <p>wins: {stats?.total_wins}</p>
-      <p>win %: {stats?.win_percent}</p>
+      <Stats stats={stats} />
+      <SetFavourite id={id} />
     </div>
   )
 }

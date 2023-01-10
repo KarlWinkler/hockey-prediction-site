@@ -194,14 +194,13 @@ def win_against_streak(request):
     return Response(streaks, status=200)
 
 @api_view(('POST',))
-def set_favourite_team(request):
+def set_favourite_team(request, id):
     if request.user.id is None:
         return Response({'message': 'not logged in'}, status=401)
 
-    team_id = request.data['team_id']
     user = create_or_get_app_user(request.user)
 
-    user.favourite_team_id = team_id
+    user.favourite_team_id = id
     user.save()
 
     serializer = UserSerializer(user)

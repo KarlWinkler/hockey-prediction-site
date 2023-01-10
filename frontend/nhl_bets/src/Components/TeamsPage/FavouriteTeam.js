@@ -9,10 +9,9 @@ const FavouriteTeam = () => {
     let response = await fetch(`/api/user`)
     let data = await response.json()
 
-    console.log(data)
     setTeam(data.favourite_team)
 
-    get_team_stats(data)
+    get_team_stats(data.favourite_team)
   }
 
 

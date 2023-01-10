@@ -27,7 +27,6 @@ const Teams = () => {
     }
   }
 
-
   return (
     <div className='Teams'>
       <FavouriteTeam />
