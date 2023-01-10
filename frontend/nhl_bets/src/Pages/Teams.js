@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import FavouriteTeam from '../Components/TeamsPage/FavouriteTeam'
 
 import Team from '../Components/TeamsPage/Team'
 import '../styles/teams_page.scss'
@@ -29,7 +30,10 @@ const Teams = () => {
 
   return (
     <div className='Teams'>
-      {teamList()}
+      <FavouriteTeam />
+      <div className='Teams-list'>
+        {teamList()}
+      </div>
     </div>
   )
 }

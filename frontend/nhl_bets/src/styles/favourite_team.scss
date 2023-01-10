@@ -1,0 +1,24 @@
+.FavouriteTeam {
+  display: flex;
+  width: 80%;
+
+  flex-direction: column;
+
+  justify-content: center;
+  border-radius: 16px;
+  background-color: var(--colour-secondary-50);
+  text-align: center;
+
+  img {
+    display: flex;
+    width: 6em;
+    height: 6em;
+    margin: auto;
+  }
+}
+
+.FavouriteTeam-stats {
+  display: flex;
+  justify-content: center;
+  gap: 4em;
+}
