@@ -3,7 +3,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .decorators.timezone import with_timezone
 from django.utils.dateparse import parse_datetime
-from .models import Game, Team, Bet
+from .models import Game, Team, Bet, Friend
 from .services.bet_stats.win_percent import WinPercent
 from .services.bet_stats.extra_time_percent import ExtraTimePercent
 from .services.bet_stats.record_by_day import RecordByDay
@@ -217,6 +217,17 @@ def get_user(request):
         return Response({'message': 'no favourite team set'}, status=200)
 
     serializer = UserSerializer(user)
+    return Response(serializer.data, status=200)
+
+@api_view(('GET',))
+def get_friends(request):
+    if request.user.id is None:
+        return Response({'message': 'not logged in'}, status=401)
+
+    user = create_or_get_app_user(request.user)
+
+    friends = Friend.objects.filter(user_id=user.id)
+    serializer = UserSerializer(friends, many=True)
     return Response(serializer.data, status=200)
 
 def create_or_get_app_user(user):
