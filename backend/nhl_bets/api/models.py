@@ -27,6 +27,14 @@ class User(models.Model):
     def __str__(self):
         return self.user.username
 
+# use websockets to tell people when someone has added them as a friend
+class Friend(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='%(class)s_user')
+    friend = models.ForeignKey(User, on_delete=models.CASCADE, related_name='%(class)s_friend')
+
+    def __str__(self):
+        return self.user.user.username + ' + ' + self.friend.user.username
+
 class Game(models.Model):
     date = models.DateTimeField()
     game_id = models.IntegerField()
