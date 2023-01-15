@@ -52,3 +52,12 @@ def get_current_user(request):
     else:
         serializer = UserSerializer(request.user, many=False)
         return Response(serializer.data, status=200)
+
+@api_view(('GET',))
+def get_users(request):
+    if request.user.id is None:
+        return Response({'message': 'not logged in'}, status=401)
+
+    users = User.objects.all()
+    serializer = UserSerializer(users, many=True)
+    return Response(serializer.data, status=200)

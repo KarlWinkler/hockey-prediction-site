@@ -20,5 +20,4 @@ urlpatterns = [
     path('user', views.get_user, name='user'),
     path('user/favourite_team/<int:id>', views.set_favourite_team, name='favourite_team'),
     path('user/friends', views.get_friends, name='friends'),
-    # path('users/<str:search_term>', views.search_users, name='search_users'),
 ]

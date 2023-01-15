@@ -28,6 +28,8 @@ class User(models.Model):
         return self.user.username
 
 # use websockets to tell people when someone has added them as a friend
+# then they can reciprocate
+# unidirectional model
 class Friend(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='%(class)s_user')
     friend = models.ForeignKey(User, on_delete=models.CASCADE, related_name='%(class)s_friend')
