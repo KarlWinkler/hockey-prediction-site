@@ -13,6 +13,7 @@ import Games from "./Pages/Games";
 import Trends from "./Pages/Trends";
 import Teams from "./Pages/Teams";
 import TeamStats from "./Pages/TeamStats";
+import Friends from "./Pages/Friends";
 import Admin from "./Pages/Admin";
 import SignUp from "./Pages/SignUp";
 import Login from "./Pages/Login";
@@ -54,6 +55,7 @@ function App() {
             <Route path='/trends' element={<Trends />} />
             <Route path='/teams' element={<Teams />} />
             <Route path='/teams/:id' element={<TeamStats />} />
+            <Route path='/friends' element={<Friends />} />
             <Route path='signup' element={<SignUp />} />
             <Route path='login' element={<Login />} />
           </Routes>
