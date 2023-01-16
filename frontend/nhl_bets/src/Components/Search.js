@@ -17,8 +17,7 @@ const Search = ({ data }) => {
       p.append(text)
       results.append(p)
     })
-      
-    console.log(filtered)
+
   }
 
   return (

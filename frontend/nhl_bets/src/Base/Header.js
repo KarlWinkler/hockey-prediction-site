@@ -45,6 +45,10 @@ const Header = ({ user }) => {
     })
   }
 
+  let toFriends = () => {
+    window.location.href = '/friends'
+  }
+
   let userFeature = () => {
     if (user) {
       return (
@@ -69,6 +73,7 @@ const Header = ({ user }) => {
         <div className='Header-link' onClick={toGames} >Games</div>
         <div className='Header-link' onClick={toTrends} >Trends</div>
         <div className='Header-link' onClick={toTeams} >Teams</div>
+        <div className='Header-link' onClick={toFriends} >Friends</div>
         {userFeature()}
         <LoginSignUpPrompt />
       </div>
