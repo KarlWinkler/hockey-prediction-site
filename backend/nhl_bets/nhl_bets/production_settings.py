@@ -1,7 +1,7 @@
 from .settings import *
 
 DEBUG = False
-ALLOWED_HOSTS = ['']
+ALLOWED_HOSTS = ['karlwinkler.pythonanywhere.com']
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
