@@ -227,7 +227,30 @@ def get_friends(request):
     user = create_or_get_app_user(request.user)
 
     friends = Friend.objects.filter(user_id=user.id)
+    friends = [friend.friend for friend in friends]
+
     serializer = UserSerializer(friends, many=True)
+    return Response(serializer.data, status=200)
+
+@api_view(('POST',))
+def add_friend(request, friend_id):
+    if request.user.id is None:
+        return Response({'message': 'not logged in'}, status=401)
+
+    app_user = create_or_get_app_user(request.user)
+    app_friend = create_or_get_app_user(User.objects.get(pk=friend_id))
+
+    friend = Friend.objects.filter(user_id=app_user.id, friend_id=app_friend.id)
+    if friend.exists():
+        return Response({'error': 'friend already added'}, status=200)
+
+    friend = Friend.objects.create(
+        user=app_user,
+        friend=app_friend
+    )
+    friend.save()
+
+    serializer = UserSerializer(app_friend)
     return Response(serializer.data, status=200)
 
 def create_or_get_app_user(user):

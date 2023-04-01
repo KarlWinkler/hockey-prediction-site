@@ -66,7 +66,6 @@ const Header = ({ user }) => {
   
   return (
     <div className='Header'>
-      {console.log(new Date().toJSON().slice(0, 10))}
       <div className='Header-logo'>Header</div>
       <div className='Header-links'>
         <div className='Header-link' onClick={toDashboard} >Dashboard</div>

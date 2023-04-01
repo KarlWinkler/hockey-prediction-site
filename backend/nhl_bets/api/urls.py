@@ -17,7 +17,8 @@ urlpatterns = [
     path('bets/win_streak', views.win_streak, name='win_streak'),
     path('bets/lose_against_streak', views.lose_against_streak, name='lose_against_streak'),
     path('bets/win_against_streak', views.win_against_streak, name='win_against_streak'),
-    path('user', views.get_user, name='user'),
     path('user/favourite_team/<int:id>', views.set_favourite_team, name='favourite_team'),
     path('user/friends', views.get_friends, name='friends'),
+    path('user/friends/<int:friend_id>', views.add_friend, name='add_friends'),
+    path('user', views.get_user, name='user'),
 ]

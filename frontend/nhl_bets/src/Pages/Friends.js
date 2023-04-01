@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react'
-import Search from '../Components/Search'
 
 const Friends = () => {
-  let [users, setUsers] = useState(null)
+  let [friends, setFriends] = useState(null)
 
   let get_data = async () => {
-    let response = await fetch('/auth/users')
+    let response = await fetch('/api/user/friends')
     let data = await response.json()
-    setUsers(data)
+    setFriends(data)
     console.log(data)
   }
 
@@ -15,10 +14,21 @@ const Friends = () => {
     get_data()
   }, [])
 
+  let friendsList = () => {
+    return friends.map((item) => {
+      return (
+        <div>
+          <h1 key={item.id}>{item.user.username}</h1>
+        </div>
+      )
+    })
+  }
+
   return (
     <div>
       <h1>Friends</h1>
-      <Search data={users} />
+      {friends ? friendsList() : "Loading..." }
+      <div className='Button' onClick={() => {window.location.href = '/friends/add'}}>Add</div>
     </div>
   )
 }

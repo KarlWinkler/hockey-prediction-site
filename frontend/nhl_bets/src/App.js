@@ -14,9 +14,11 @@ import Trends from "./Pages/Trends";
 import Teams from "./Pages/Teams";
 import TeamStats from "./Pages/TeamStats";
 import Friends from "./Pages/Friends";
+import AddFriends from "./Pages/AddFriends";
 import Admin from "./Pages/Admin";
 import SignUp from "./Pages/SignUp";
 import Login from "./Pages/Login";
+import LineChart from "./Pages/LineChart";
 
 import Header from "./Base/Header";
 import Footer from "./Base/Footer";
@@ -56,8 +58,10 @@ function App() {
             <Route path='/teams' element={<Teams />} />
             <Route path='/teams/:id' element={<TeamStats />} />
             <Route path='/friends' element={<Friends />} />
+            <Route path='/friends/add' element={<AddFriends />} />
             <Route path='signup' element={<SignUp />} />
             <Route path='login' element={<Login />} />
+            <Route path='linechart' element={<LineChart />} />
           </Routes>
         </div>
 
