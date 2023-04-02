@@ -12,10 +12,10 @@ const Trends = () => {
   let [lossStreaksExpanded, setLossStreaksExpanded] = useState([null, null, null, null])
 
   useEffect(() => {
-    // getStreaks('/api/bets/loss_streak?num_results=3', setLossStreaks)
-    // getStreaks('/api/bets/win_streak?num_results=3', setWinStreaks)
+    getStreaks('/api/bets/loss_streak?num_results=3', setLossStreaks)
+    getStreaks('/api/bets/win_streak?num_results=3', setWinStreaks)
     getStreaks('/api/bets/lose_against_streak?num_results=3', setLoseAgainstStreaks)
-    // getStreaks('/api/bets/win_against_streak?num_results=3', setWinAgainstStreaks)
+    getStreaks('/api/bets/win_against_streak?num_results=3', setWinAgainstStreaks)
   }, [])
 
   let getStreaks = async (url, setState) => {
