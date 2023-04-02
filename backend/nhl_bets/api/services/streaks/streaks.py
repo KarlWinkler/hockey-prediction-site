@@ -7,6 +7,12 @@ class Streak:
         self.user = user
         self.num_results = num_results
 
+    def get_streak_by_team(self, team, streak):
+        # get bets where the game is final and the team is the home or away team
+        bets = Bet.objects.filter(user=self.user, game__status='Final', game__home_team=team).order_by('-game__date') | Bet.objects.filter(user=self.user, game__status='Final', game__away_team=team).order_by('-game__date')
+
+        return streak(bets)
+
     def get_streaks(self):
         bets = Bet.objects.filter(user=self.user, game__status='Final').order_by('-game__date')
         active_streaks = {}
@@ -48,19 +54,36 @@ class Streak:
             'streaks': self.streak_to_json(),
         }
 
+    # def streak_to_json(self):
+    #     streaks = self.get_streaks()
+    #     streaks_array = []
+
+    #     for streak in streaks:
+    #         streaks_array.append({
+    #             'team': TeamSerializer(Team.objects.get(pk=streak), many=False).data,
+    #             'streak': streaks[streak],
+    #         })
+
+    #         streaks_array.sort(key=lambda x: x['streak'], reverse=True)
+
+    #     if self.num_results > 0:
+    #         return streaks_array[:self.num_results]
+
+    #     return streaks_array
+
     def streak_to_json(self):
-        streaks = self.get_streaks()
-        streaks_array = []
+      teams = Team.objects.all()
 
-        for streak in streaks:
-            streaks_array.append({
-                'team': TeamSerializer(Team.objects.get(pk=streak), many=False).data,
-                'streak': streaks[streak],
-            })
+      streaks = []
 
-            streaks_array.sort(key=lambda x: x['streak'], reverse=True)
+      inx = 0
+      for team in teams:
+          streaks.append({ "team": TeamSerializer(Team.objects.get(pk=team.id), many=False).data, "streak": self.get_streak_by_team(team, self.calculate_streak) })
+          inx += 1
 
-        if self.num_results > 0:
-            return streaks_array[:self.num_results]
+      streaks.sort(key=lambda x: x['streak'], reverse=True)
 
-        return streaks_array
+      if self.num_results:
+          streaks = streaks[:self.num_results]
+
+      return streaks
