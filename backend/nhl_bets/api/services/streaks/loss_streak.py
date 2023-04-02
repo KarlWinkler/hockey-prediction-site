@@ -30,3 +30,14 @@ class LossStreak(Streak):
         print(ended_streaks)
 
         return {**active_streaks, **ended_streaks}
+
+    def calculate_streak(self, bets):
+        streak = 0
+
+        for bet in bets:
+            if not self.bet_is_correct(bet):
+                streak += 1
+            else:
+                break
+
+        return streak

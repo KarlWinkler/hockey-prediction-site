@@ -45,9 +45,6 @@ class Streak:
 
         return True
 
-    def __str__(self):
-        return f'Loss Streak: {self.get_loss_streak()}'
-
     def toJSON(self):
         return {
             'user_id': self.user.id,
