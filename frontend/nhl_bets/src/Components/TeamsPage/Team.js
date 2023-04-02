@@ -7,7 +7,7 @@ const Team = ({ id, name, icon }) => {
 
   return (
     <div id={`team_${id}`} onClick={toTeam}>
-      <img src={icon} />
+      <img className='small-image' src={icon} />
       <span>{name}</span>
     </div>
   )

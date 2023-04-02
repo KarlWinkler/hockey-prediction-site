@@ -4,11 +4,17 @@ class TeamWinPercent:
     def __init__(self, user_id, team_id):
         self.user_id = user_id
         self.team_id = team_id
-        self.bets = Bet.objects.filter(user_id=user_id, game__status='Final')
-        self.team_bets = [bet for bet in self.bets if self.picked_team(bet) == Team.objects.get(id=team_id)]
-        self.total_bets = len(self.team_bets)
-        self.total_wins = len([bet for bet in self.team_bets if bet.win])
-        self.total_losses = len([bet for bet in self.team_bets if not(bet.win)])
+        self.bets =(Bet.objects
+                   .filter(user_id=user_id, game__status='Final', game__home_team_id=team_id)
+                   .exclude(pick='away')
+                   .order_by('-game__date')
+                   | Bet.objects
+                   .filter(user_id=user_id, game__status='Final', game__away_team_id=team_id)
+                    .exclude(pick='home')
+                   .order_by('-game__date'))
+        self.total_bets = len(self.bets)
+        self.total_wins = len([bet for bet in self.bets if bet.win])
+        self.total_losses = len([bet for bet in self.bets if not(bet.win)])
         self.win_percent = self.total_wins / self.total_bets if self.total_bets > 0 else 0
     
     def __str__(self):

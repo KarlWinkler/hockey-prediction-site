@@ -114,3 +114,39 @@
     margin: 0 1em;
   }
 }
+
+.Games-small {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+
+  width: min-content;
+
+
+  .Game-small {
+    display: grid;
+    grid-template-columns: min-content min-content min-content;
+    align-items: center;
+    justify-items: center;
+    border: var(--colour-selected) solid;
+    padding: 2em;
+    gap: 1em;
+
+    * {
+      text-align: center;
+    }
+
+    .winner {
+      border-radius: 8px;
+      color: var(--colour-background);
+      background-color: var(--colour-selected);
+    }
+
+    &.correct {
+      background-color: var(--colour-correct);
+    }
+
+    &.incorrect {
+      background-color: var(--colour-incorrect);
+    }
+  }
+}

@@ -44,7 +44,13 @@ def get_team_stats(request, id):
 
 @api_view(('GET',))
 def get_games(request):
-    games = Game.objects.all()
+    team_id = request.GET.get('team', None)
+
+    if team_id:
+        games = Game.objects.filter(away_team_id=team_id) | Game.objects.filter(home_team_id=team_id)
+    else:
+        games = Game.objects.all()
+
     serializer = GameSerializer(games, many=True)
     return Response(serializer.data, status=200)
 

@@ -33,15 +33,15 @@
     }
   }
 
-  img {
-    display: flex;
-    width: 4em;
-    height: 4em;
-  }
-
   span {
     display: flex;
     justify-content: center;
     align-items: center;
   }
+}
+
+.small-image {
+  display: flex;
+  width: 4em;
+  height: 4em;
 }
