@@ -47,9 +47,9 @@ def get_games(request):
     team_id = request.GET.get('team', None)
 
     if team_id:
-        games = Game.objects.filter(away_team_id=team_id) | Game.objects.filter(home_team_id=team_id)
+        games = (Game.objects.filter(away_team_id=team_id) | Game.objects.filter(home_team_id=team_id)).order_by('-date')
     else:
-        games = Game.objects.all()
+        games = Game.objects.all().order_by('-date')
 
     serializer = GameSerializer(games, many=True)
     return Response(serializer.data, status=200)
