@@ -45,6 +45,7 @@ class Game(models.Model):
     away_team = models.ForeignKey(Team, on_delete=models.PROTECT, related_name='%(class)s_away_team')
     home_score = models.IntegerField(blank=True, null=True)
     away_score = models.IntegerField(blank=True, null=True)
+    game_type = models.CharField(max_length=50) # R = regular season, P = playoffs
     result_in = models.IntegerField(blank=True, null=True) # 0 = regulation, 1 = overtime, 2 = shootout
     season = models.CharField(max_length=50)
 
