@@ -11,9 +11,12 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+STATIC_ROOT =os.path.join(BASE_DIR, 'staticfiles')
 
 
 # Quick-start development settings - unsuitable for production
@@ -25,7 +28,7 @@ SECRET_KEY = 'django-insecure-)ou40m5&tw#ah(^k#ky9i((6uf3ad^^8=23yar1*qydf-donn%
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['.railway.app']
 
 
 # Application definition
@@ -136,4 +139,5 @@ CORS_ALLOWED_ORIGINS = [
     'https://sub.example.com',
     'http://localhost:3000',
     'http://127.0.0.1:3000',
+    '.vercel.app',
 ]
