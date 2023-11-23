@@ -11,13 +11,20 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
+import environ
 import os
+
+env = environ.Env(
+    # set casting, default value
+    DEBUG=(bool, False)
+)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 STATIC_ROOT =os.path.join(BASE_DIR, 'staticfiles')
 
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
@@ -26,9 +33,10 @@ STATIC_ROOT =os.path.join(BASE_DIR, 'staticfiles')
 SECRET_KEY = 'django-insecure-)ou40m5&tw#ah(^k#ky9i((6uf3ad^^8=23yar1*qydf-donn%'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env('DEBUG')
 
-ALLOWED_HOSTS = ['.railway.app']
+print(f"ALLOWED_HOSTS: {env.list('ALLOWED_HOSTS')}")
+ALLOWED_HOSTS = env.tuple('ALLOWED_HOSTS')
 
 
 # Application definition
@@ -83,12 +91,12 @@ WSGI_APPLICATION = 'nhl_bets.wsgi.application'
 
 DATABASES = {
         'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'nhl_bets',
-        'USER': 'postgres',
-        'PASSWORD': 'postgres',
-        'HOST': 'localhost',
-        'PORT': '5433',
+        'ENGINE': env('DB_ENGINE'),
+        'NAME': env('DB_NAME'),
+        'USER': env('DB_USER'),
+        'PASSWORD': env('DB_PASSWORD'),
+        'HOST': env('DB_HOST'),
+        'PORT': env('DB_PORT'),
     }
 }
 
@@ -134,10 +142,4 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CORS_ALLOWED_ORIGINS = [
-    'https://example.com',
-    'https://sub.example.com',
-    'http://localhost:3000',
-    'http://127.0.0.1:3000',
-    '.vercel.app',
-]
+CORS_ALLOWED_ORIGINS = env.list('CORS_ALLOWED_ORIGINS')

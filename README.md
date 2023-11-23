@@ -13,4 +13,4 @@ y# NHL Prediction Site
 ![image](https://github.com/KarlWinkler/hockey-prediction-site/assets/39600307/5c1ba93c-fccf-459d-a507-c71c873d5f5c)
 
 # Setup
-I will set up docker later lmao
+

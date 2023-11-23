@@ -69,37 +69,36 @@ def get_games_by_date(request, date):
 
 @api_view(('POST',))
 def update_games(request, date=''):
-    games = requests.get(f'https://statsapi.web.nhl.com/api/v1/schedule?date={date}&expand=schedule.linescore')
-    for date in games.json()['dates']:
-        for game in date['games']:
-            create_or_update_game(game)
+    games = requests.get(f'https://api-web.nhle.com/v1/score/{date}')
+    for game in games.json()['games']:
+        create_or_update_game(game)
     return Response(games.json(), status=200)
 
 def create_or_update_game(game):
-    timezone_aware_date = timezone.make_aware(datetime.strptime(game['gameDate'], '%Y-%m-%dT%H:%M:%SZ'))
-    if Game.objects.filter(game_id=game['gamePk']).exists():
-        _game=Game.objects.get(game_id=game['gamePk'])
-        _game.game_id=game['gamePk']
+    timezone_aware_date = timezone.make_aware(datetime.strptime(game['startTimeUTC'], '%Y-%m-%dT%H:%M:%SZ'))
+    if Game.objects.filter(game_id=game['id']).exists():
+        _game=Game.objects.get(game_id=game['id'])
+        _game.game_id=game['id']
         _game.date=timezone_aware_date
-        _game.status=game['status']['detailedState']
-        _game.away_score=game['teams']['away']['score']
-        _game.home_score=game['teams']['home']['score']
-        _game.home_team=Team.objects.get(nhl_id=game['teams']['home']['team']['id'])
-        _game.away_team=Team.objects.get(nhl_id=game['teams']['away']['team']['id'])
+        _game.status=game['gameState']
+        _game.away_score=game['awayTeam'].get('score', 0)
+        _game.home_score=game['homeTeam'].get('score', 0)
+        _game.away_team=Team.objects.get(nhl_id=game['awayTeam']['id'])
+        _game.home_team=Team.objects.get(nhl_id=game['homeTeam']['id'])
         _game.season=game['season']
         _game.game_type=game['gameType']
         
-        if _game.status == 'Final':
+        if _game.status == 'OFF':
           _game.result_in = result_in_game(game)
     else:
         _game = Game.objects.create(
-            game_id=game['gamePk'],
+            game_id=game['id'],
             date=timezone_aware_date,
-            status=game['status']['detailedState'],
-            home_team=Team.objects.get(nhl_id=game['teams']['home']['team']['id']),
-            away_team=Team.objects.get(nhl_id=game['teams']['away']['team']['id']),
-            away_score=game['teams']['away']['score'],
-            home_score=game['teams']['home']['score'],
+            status=game['gameState'],
+            away_team=Team.objects.get(nhl_id=game['awayTeam']['id']),
+            home_team=Team.objects.get(nhl_id=game['homeTeam']['id']),
+            away_score=game['awayTeam'].get('score', 0),
+            home_score=game['homeTeam'].get('score', 0),
             season=game['season'],
             game_type=game['gameType']
         )
@@ -108,7 +107,10 @@ def create_or_update_game(game):
     return _game
 
 def result_in_game(game):
-    return game['linescore']['currentPeriod'] - 3
+    if game['clock']:
+      return game['period'] - 3
+    else:
+      return -1
 
 @api_view(('POST',))
 def update_bets(request, game, pick):

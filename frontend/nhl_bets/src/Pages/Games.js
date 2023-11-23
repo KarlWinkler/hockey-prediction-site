@@ -76,7 +76,7 @@ const Games = () => {
               <span className='score'>{game.home_score}</span>
               vs.
               <span className='score'>{game.away_score}</span>
-              <span className=''>{resultInToString(game.result_in)}</span>
+              <span className=''>{resultInToString(game.result_in, game.game_type)}</span>
 
             </span>
 
@@ -87,15 +87,25 @@ const Games = () => {
     }
   }
 
-  let resultInToString = (result_in) => {
-    if (result_in === 0) {
-      return ''
+  let resultInToString = (result_in, game_type) => {
+    if (game_type === 'P' || game_type === '2') {
+      if (result_in === 0) {
+        return ''
+      }
+      else if (result_in > 0) {
+        return `OT${result_in}`
+      }
     }
-    else if (result_in === 1) {
-      return 'OT'
-    }
-    else if (result_in === 2) {
-      return 'SO'
+    else {
+      if (result_in === 0) {
+        return ''
+      }
+      else if (result_in === 1) {
+        return 'OT'
+      }
+      else if (result_in === 2) {
+        return 'SO'
+      }
     }
   }
 
@@ -106,7 +116,7 @@ const Games = () => {
         if (game !== null) {
           game.classList.add(`Selected-${bet.pick}`)
           
-          if (game.classList.contains('Final') || game.classList.contains('Over')) {
+          if (game.classList.contains('Final') || game.classList.contains('Over') || game.classList.contains('OFF')) {
             let winner = game.className.match(/winner_[\S]{4}/)[0].split('_')[1]
             if (winner == bet.pick) {
               console.log('winner', winner, bet.pick)
@@ -128,7 +138,7 @@ const Games = () => {
     let game = e.target.closest('.Game')
     let team = e.target.closest('.Team')
 
-    if (game.classList.contains('Final') || game.classList.contains('Progress')) {
+    if (game.classList.contains('Final') || game.classList.contains('Progress') || game.classList.contains('OFF')) {
       return
     }
 
