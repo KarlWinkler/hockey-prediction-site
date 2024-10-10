@@ -1,4 +1,4 @@
-y# NHL Prediction Site
+# NHL Prediction Site
 
 # Pick Teams
 ![image](https://github.com/KarlWinkler/hockey-prediction-site/assets/39600307/fb89a2d1-a3b1-46c0-9926-3518b11bec97)
