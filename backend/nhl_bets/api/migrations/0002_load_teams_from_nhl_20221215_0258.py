@@ -9,14 +9,14 @@ def load_teams(apps, schema_editor):
     
     for team in get_teams():
       Team.objects.create(
-        name=team['name'],
-        abbreviation=team['abbreviation'],
+        name=team['fullName'],
+        abbreviation=team['triCode'],
         nhl_id=team['id']
       )
 
 def get_teams():
-    response = requests.get('https://statsapi.web.nhl.com/api/v1/teams')
-    return response.json()['teams']
+    response = requests.get('https://api.nhle.com/stats/rest/en/team')
+    return response.json()['data']
 
 class Migration(migrations.Migration):
     dependencies = [

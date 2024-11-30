@@ -1,0 +1,44 @@
+services:
+  backend:
+    container_name: nhl-bets-backend
+    build:
+      context: ./backend/nhl_bets
+      dockerfile: dockerfile-backend
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+    volumes:
+      - ./backend/nhl_bets:/app
+  db:
+    container_name: nhl-bets-db
+    image: postgres
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+  redis:
+    container_name: nhl-bets-redis
+    image: redis
+    ports:
+      - 6379:6379
+  frontend:
+    container_name: nhl-bets-frontend
+    build:
+      context: ./frontend/nhl_bets
+      dockerfile: dockerfile-frontend
+    ports:
+      - 3000:3000
+    depends_on:
+      - backend
+    volumes:
+      - /app/node_modules
+      - ./frontend/nhl_bets:/app
+volumes:
+  postgres-data: {}

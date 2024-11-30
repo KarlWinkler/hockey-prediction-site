@@ -36,7 +36,7 @@ SECRET_KEY = 'django-insecure-)ou40m5&tw#ah(^k#ky9i((6uf3ad^^8=23yar1*qydf-donn%
 DEBUG = env('DEBUG')
 
 print(f"ALLOWED_HOSTS: {env.list('ALLOWED_HOSTS')}")
-ALLOWED_HOSTS = env.tuple('ALLOWED_HOSTS')
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -142,4 +142,4 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CORS_ALLOWED_ORIGINS = env.list('CORS_ALLOWED_ORIGINS')
+CORS_ALLOWED_ORIGINS = ['http://nhl-bets-backend:8000', 'http://localhost:8000']

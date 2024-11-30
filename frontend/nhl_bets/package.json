@@ -1,7 +1,7 @@
 {
   "name": "nhl_bets",
   "version": "0.1.0",
-  "proxy": "http://localhost:8000",
+  "proxy": "http://nhl-bets-backend:8000",
   "private": true,
   "dependencies": {
     "@nivo/core": "^0.80.0",

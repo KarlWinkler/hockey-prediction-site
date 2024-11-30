@@ -1,5 +1,5 @@
 from django.utils import timezone
-from backports import zoneinfo
+import zoneinfo
 
 class DateService:
     def __init__(self, date):

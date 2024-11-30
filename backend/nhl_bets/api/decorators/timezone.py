@@ -1,5 +1,5 @@
 from django.utils import timezone
-from backports import zoneinfo
+import zoneinfo
 
 def with_timezone(func):
   def set_timezone_wrapper(*args, **kwargs):

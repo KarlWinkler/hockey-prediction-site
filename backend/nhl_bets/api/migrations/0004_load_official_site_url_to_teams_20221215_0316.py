@@ -8,11 +8,13 @@ def update(apps, schema_editor):
     Team = apps.get_model('api', 'Team')
     
     for team in get_teams():
-      Team.objects.filter(nhl_id=team['id']).update(official_site_url=team['officialSiteUrl'])
+      Team.objects.filter(abbreviation=team['teamAbbrev']['default']).update(
+        official_site_url=f"https://www.nhl.com/{team['teamCommonName']['default'].lower().replace(' ', '')}/"
+      )
 
 def get_teams():
-    response = requests.get('https://statsapi.web.nhl.com/api/v1/teams')
-    return response.json()['teams']
+    response = requests.get('https://api-web.nhle.com/v1/standings/now')
+    return response.json()['standings']
 
 class Migration(migrations.Migration):
 
