@@ -21,7 +21,7 @@ shell:
 	@docker exec -it ${BACKEND_CONTAINER} sh -c '/bin/bash'
 
 db:
-	@docker exec -it ${DATABASE_CONTAINER} psql -U pointer
+	@docker exec -it ${DATABASE_CONTAINER} psql -U predictor
 
 superuser:
 	@docker exec -it ${BACKEND_CONTAINER} python manage.py createsuperuser

@@ -8,7 +8,7 @@ def load_icons(apps, schema_editor):
     Icon = apps.get_model('api', 'Icon')
     Team = apps.get_model('api', 'Team')
     for team in Team.objects.all():
-        team_name = team.name.lower().replace(' ', '-')
+        team_name = team.name.lower().replace(' ', '-').replace('.', '').replace('é', 'e')
         Icon.objects.create(name=team.name, image=os.path.join('images', f'nhl-{team_name}-logo-300x300.png'), team=team)
 
 class Migration(migrations.Migration):
