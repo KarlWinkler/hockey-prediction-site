@@ -7,7 +7,7 @@ class ByScoreDelta:
         self.end_date = end_date
         self.delta = delta
         self.conditional = conditional
-        self.bets = Bet.objects.filter(user_id=user_id, game__status__in=Game.final_states(), game__date__range=(start_date, end_date))
+        self.bets = Bet.objects.final().filter(user_id=user_id, game__date__range=(start_date, end_date))
         self.total_bets = self.bets.count()
         bets_at_delta = [bet for bet in self.bets if self.valid_condition(bet, delta, conditional)]
         self.total_bets_at_delta = len(bets_at_delta)

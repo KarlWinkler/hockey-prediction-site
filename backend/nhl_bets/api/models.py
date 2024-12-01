@@ -37,7 +37,15 @@ class Friend(models.Model):
     def __str__(self):
         return self.user.user.username + ' + ' + self.friend.user.username
 
+
+class GameManager(models.Manager):
+    def final(self):
+        return self.filter(status__in=Game.final_states())
+
+
 class Game(models.Model):
+    objects = GameManager()
+
     date = models.DateTimeField()
     game_id = models.IntegerField()
     status = models.CharField(max_length=50)
@@ -70,7 +78,15 @@ class Game(models.Model):
     def __str__(self):
         return self.home_team.name + ' vs ' + self.away_team.name
 
+
+class BetManager(models.Manager):
+    def final(self):
+        return self.filter(game__status__in=Game.final_states())
+
+
 class Bet(models.Model):
+    objects = BetManager()
+
     game = models.ForeignKey(Game, on_delete=models.PROTECT)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
     bet_amount = models.IntegerField() # in points (unimplemented)

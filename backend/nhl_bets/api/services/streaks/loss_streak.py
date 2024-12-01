@@ -13,13 +13,15 @@ class LossStreak(Streak):
         streak = 0
 
         bets = (Bet.objects
-                   .filter(user=self.user, game__status='Final', game__home_team=team)
+                   .final()
+                   .filter(user=self.user, game__home_team=team)
                    .exclude(pick='away')
                    .order_by('-game__date')
                    | Bet.objects
-                   .filter(user=self.user, game__status='Final', game__away_team=team)
-                    .exclude(pick='home')
-                   .order_by('-game__date'))
+                        .final()
+                        .filter(user=self.user, game__away_team=team)
+                        .exclude(pick='home')
+                        .order_by('-game__date'))
 
         for bet in bets:
             if not self.bet_is_correct(bet):

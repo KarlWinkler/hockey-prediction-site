@@ -12,7 +12,7 @@ class Streak:
         return streak(bets)
 
     def get_streaks(self):
-        bets = Bet.objects.filter(user=self.user, game__status='Final').order_by('-game__date')
+        bets = Bet.objects.final().filter(user=self.user.order_by('-game__date'))
         active_streaks = {}
         ended_streaks = {}
 
