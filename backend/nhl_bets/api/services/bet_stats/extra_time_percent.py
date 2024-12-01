@@ -5,7 +5,7 @@ class ExtraTimePercent:
         self.user_id = user_id
         self.start_date = start_date
         self.end_date = end_date
-        self.bets = Bet.objects.filter(user_id=user_id, game__status='Final', game__date__range=(start_date, end_date))
+        self.bets = Bet.objects.filter(user_id=user_id, game__status__in=Game.final_states(), game__date__range=(start_date, end_date))
         self.et_bets = [bet for bet in self.bets if bet.game.result_in > 0]
         self.total_bets = self.bets.count()
         self.et_bet_count = len(self.et_bets)

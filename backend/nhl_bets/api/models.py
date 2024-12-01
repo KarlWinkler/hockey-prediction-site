@@ -59,6 +59,14 @@ class Game(models.Model):
             else:
                 return None
 
+    @staticmethod
+    def final_states():
+        return [
+            'Final',
+            'FINAL',
+            'OFF'
+        ]
+
     def __str__(self):
         return self.home_team.name + ' vs ' + self.away_team.name
 

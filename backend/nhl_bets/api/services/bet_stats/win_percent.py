@@ -1,11 +1,11 @@
-from ...models import Bet
+from ...models import Bet, Game
 
 class WinPercent:
     def __init__(self, user_id, start_date, end_date):
         self.user_id = user_id
         self.start_date = start_date
         self.end_date = end_date
-        self.bets = Bet.objects.filter(user_id=user_id, game__status='Final', game__date__range=(start_date, end_date))
+        self.bets = Bet.objects.filter(user_id=user_id, game__status__in=Game.final_states(), game__date__range=(start_date, end_date))
         self.total_bets = self.bets.count()
         self.total_wins = len([bet for bet in self.bets if bet.win])
         self.total_losses = len([bet for bet in self.bets if not(bet.win)])
