@@ -14,4 +14,8 @@
 
 # Setup
 
+run `make up`
+in a new terminal with docker compose still running;
+run `make migrate`
+
 https://github.com/Zmalski/NHL-API-Reference
