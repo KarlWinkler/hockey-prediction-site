@@ -14,3 +14,4 @@
 
 # Setup
 
+https://github.com/Zmalski/NHL-API-Reference

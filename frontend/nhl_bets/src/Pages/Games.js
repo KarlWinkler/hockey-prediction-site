@@ -116,7 +116,7 @@ const Games = () => {
         if (game !== null) {
           game.classList.add(`Selected-${bet.pick}`)
           
-          if (game.classList.contains('Final') || game.classList.contains('Over') || game.classList.contains('OFF')) {
+          if (game.classList.contains('FINAL') || game.classList.contains('Final') || game.classList.contains('Over') || game.classList.contains('OFF')) {
             let winner = game.className.match(/winner_[\S]{4}/)[0].split('_')[1]
             if (winner == bet.pick) {
               console.log('winner', winner, bet.pick)

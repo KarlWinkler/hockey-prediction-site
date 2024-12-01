@@ -88,7 +88,7 @@ def create_or_update_game(game):
         _game.season=game['season']
         _game.game_type=game['gameType']
         
-        if _game.status == 'OFF':
+        if _game.status in ["OFF", "FINAL"]:
           _game.result_in = result_in_game(game)
     else:
         _game = Game.objects.create(
@@ -107,7 +107,7 @@ def create_or_update_game(game):
     return _game
 
 def result_in_game(game):
-    if game['clock']:
+    if game['period']:
       return game['period'] - 3
     else:
       return -1
