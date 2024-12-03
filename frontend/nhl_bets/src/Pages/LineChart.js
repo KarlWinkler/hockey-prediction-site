@@ -2,6 +2,7 @@ import React, {useEffect, useState } from 'react'
 
 import NivoLineChart from '../Components/NivoLineChart'
 import '../styles/linechart.scss'
+import RechartsLineChart from '../Components/RechartsLineChart'
 
 const LineChart = () => {
   let [stats, setStats] = useState(null)
@@ -24,29 +25,17 @@ const LineChart = () => {
   }
 
   let data = () => { 
-    return [
-      {
-        id: 'Win %',
-        color: '#000000',
-        data: stats?.win_percents.map((win_percent, index) => {
-          return {
-            x: win_percent.start_date.slice(0, 10),
-            y: win_percent.win_percent
-          }
-        }).reverse()
-      }
-    ]
+    return stats?.win_percents.map((win_percent, index) => {
+        return {
+          x: win_percent.start_date.slice(8, 10),
+          y: win_percent.win_percent
+        }
+      }).reverse()
   }
 
 
   return (
-    <div className="linechart">
-      {stats === null ? '': <NivoLineChart data={data()} /> }
-      <div className='date-range-selector'>
-        <input type='date' onChange={ e => setFrom(e.target.value) } />
-        <input type='date' onChange={ e => setTo(e.target.value) } />
-      </div>
-    </div>
+    <RechartsLineChart data={data()} />
   )
 }
 

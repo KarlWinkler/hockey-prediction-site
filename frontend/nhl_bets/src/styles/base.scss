@@ -40,6 +40,10 @@ body {
   --trackBorder: 1px solid var(--colour-secondary-50);
   --progressBg: var(--colour-secondary-50);
 
+  --spacing-9: 2px;
+  --spacing-8: 4px;
+  --spacing-7: 8px;
+
   /* webkit progress workaround */
   --webkitProgressPercent: 0%;
 }
