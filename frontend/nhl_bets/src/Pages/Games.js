@@ -5,6 +5,8 @@ import getCookie from '../Extras/GetCookie'
 import Team from '../Components/Team'
 import LoadGames from '../Components/LoadGames'
 import DateBar from '../Components/DateBar'
+import { formattedDateFromString } from '../utils/date'
+
 import '../styles/game.scss'
 
 const Games = () => {
@@ -26,9 +28,7 @@ const Games = () => {
   }, [bets])
 
   let get_games = async () => {
-    let selectDate = date
-
-    console.log(new Date() )
+    let selectDate = formattedDateFromString(date)
 
     let response = await fetch(`/api/games/${selectDate + timezone()}`)
     let data = await response.json()
@@ -88,7 +88,7 @@ const Games = () => {
   }
 
   let resultInToString = (result_in, game_type) => {
-    if (game_type === 'P' || game_type === '2') {
+    if (game_type === 'P') {
       if (result_in === 0) {
         return ''
       }
@@ -176,8 +176,8 @@ const Games = () => {
     console.log(`/api/bets/${game}`)
   }
 
-  let deleteBet = async (game) => {
-    let response = await fetch(`/api/bets/delete/${game}`, {
+  let deleteBet = (game) => {
+    fetch(`/api/bets/delete/${game}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',

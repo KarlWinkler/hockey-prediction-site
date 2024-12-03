@@ -1,13 +1,15 @@
 import React, { useState } from 'react'
 import getCookie from '../Extras/GetCookie'
+import { formattedDateFromString } from '../utils/date'
+
 import '../styles/load_games.scss'
 
 const LoadGames = ({ date }) => {
   let [games, setGames] = useState(null)
 
   let updateGames = async () => {
-    console.log('date', date)
-    let response = await fetch(`/api/games/update${'/' + date}`, {
+    const formattedDate = formattedDateFromString(date)
+    let response = await fetch(`/api/games/update${'/' + formattedDate}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

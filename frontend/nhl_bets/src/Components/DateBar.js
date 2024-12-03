@@ -1,18 +1,15 @@
 import React from 'react'
 
 import '../styles/date_bar.scss'
+import { parseDateString, formattedDate } from '../utils/date'
 
 const DateBar = ({ date }) => {
 
   let dateWithOffset = (offset) => {
-    let year = date.split('-')[0]
-    let month = date.split('-')[1]
-    let day = date.split('-')[2]
-
-    let parsedDate= new Date(`${month}/${day}/${year}`)
+    const parsedDate = parseDateString(date)
     let offsetDate = new Date(parsedDate.getTime() + offset * 24 * 60 * 60 * 1000)
 
-    return offsetDate.toISOString().split('T')[0]
+    return formattedDate(offsetDate)
   }
 
   let goToDate = (e) => {
