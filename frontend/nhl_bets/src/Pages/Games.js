@@ -48,7 +48,6 @@ const Games = () => {
   let get_bets = async () => { 
     if (games !== null) {
       let gameList = games.map(game => game.id)
-      console.log(gameList)
       let response = await fetch(`/api/bets?games=${gameList}`, {
         method: 'GET',
         headers: {
@@ -119,7 +118,6 @@ const Games = () => {
           if (game.classList.contains('FINAL') || game.classList.contains('Final') || game.classList.contains('Over') || game.classList.contains('OFF')) {
             let winner = game.className.match(/winner_[\S]{4}/)[0].split('_')[1]
             if (winner == bet.pick) {
-              console.log('winner', winner, bet.pick)
               game.classList.add('correct')
             }
             else {
@@ -173,7 +171,6 @@ const Games = () => {
       },
     })
     let data = await response.json()
-    console.log(`/api/bets/${game}`)
   }
 
   let deleteBet = (game) => {
@@ -184,8 +181,6 @@ const Games = () => {
         'X-CSRFToken': getCookie('csrftoken')
       },
     })
-    let data = await response.json()
-    console.log(data)
   }
 
   return (

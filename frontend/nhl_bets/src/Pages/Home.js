@@ -51,7 +51,6 @@ const Home = () => {
       {stats == null ? '' :  <PieChart title='Overall win %' percents={[stats.win_percent * 100, stats.et_percent * 100]} />}
       {stats == null ? '' :  <LineChart title='Win % per Day' dataPoints={stats.win_percents || []} />}
       {stats == null ? '' :  <Table title='Win % per score delta' rows={scoreDeltas || [{'No Data': 'NaN'}]} />}
-      {console.log(stats)}
       <div className='date-range-selector'>
         <input type='date' onChange={ e => setFrom(e.target.value) } />
         <input type='date' onChange={ e => setTo(e.target.value) } />

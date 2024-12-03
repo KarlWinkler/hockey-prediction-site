@@ -18,7 +18,6 @@ const LoadGames = ({ date }) => {
     })
     let data = await response.json()
     setGames(data)
-    console.log(games)
     window.location.reload()
     // document.querySelector('#games').innerHTML = gameList().map(game => '<p>' + game + '</p>').join('')
   }

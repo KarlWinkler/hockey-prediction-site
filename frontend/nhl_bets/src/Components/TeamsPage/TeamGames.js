@@ -20,14 +20,12 @@ const TeamGames = ({ id }) => {
     let response = await fetch(`/api/bets?games=${gameList}`)
     let data = await response.json()
     setBets(data)
-    console.log(data)
   }
 
   let get_team_games = async () => {
     let response = await fetch(`/api/games?team=${id}`)
     let data = await response.json()
     setGames(data)
-    console.log(data)
   }
 
   let renderGames = () => {

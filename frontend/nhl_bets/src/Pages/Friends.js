@@ -7,7 +7,6 @@ const Friends = () => {
     let response = await fetch('/api/user/friends')
     let data = await response.json()
     setFriends(data)
-    console.log(data)
   }
 
   useEffect(() => {

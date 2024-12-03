@@ -26,7 +26,6 @@ const Trends = () => {
   }
 
   let toggleStreaks = (e, streakName, streak, streakSetter, index) => {
-    console.log(lossStreaksExpanded)
     // debuggerS
     if (lossStreaksExpanded[index] === null) {
       // get the other streaks depending on what was clicked

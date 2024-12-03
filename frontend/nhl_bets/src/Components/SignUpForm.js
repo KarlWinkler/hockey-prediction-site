@@ -36,7 +36,6 @@ const SignUpForm = () => {
       body: JSON.stringify(body)
     })
     let data = await response.json()
-    console.log(data)
     if (response.status === 201 || response.status === 200) {
       window.location.href = '/'
     }

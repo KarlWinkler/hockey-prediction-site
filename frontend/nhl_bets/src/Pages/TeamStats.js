@@ -16,7 +16,6 @@ const TeamStats = () => {
     let response = await fetch(`/api/teams/stats/${id}`)
     let data = await response.json()
     setStats(data)
-    console.log(data)
   }
 
   return (

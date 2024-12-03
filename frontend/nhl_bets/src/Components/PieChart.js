@@ -27,7 +27,6 @@ const PieChart = ({ title, percents }) => {
     gradient += `var(--colour-incorrect) ${current_percent}%, `
 
     chart.style.backgroundImage = gradient.slice(0, -2) + ')'
-    console.log(gradient.slice(0, -2) + ')')
 
     // current_percent
   }

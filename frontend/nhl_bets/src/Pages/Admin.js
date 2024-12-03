@@ -8,7 +8,6 @@ const Admin = () => {
   let [date, setDate] = useState(new Date().toJSON().slice(0,10))
 
   let updateGames = async () => {
-    console.log('date', date)
     let response = await fetch(`/api/games/update${'/' + date}`, {
       method: 'POST',
       headers: {
@@ -18,7 +17,6 @@ const Admin = () => {
     })
     let data = await response.json()
     setGames(data)
-    console.log(games)
   }
 
   return (

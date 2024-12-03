@@ -6,13 +6,11 @@ const AddFriends = () => {
   let [users, setUsers] = useState(null)
 
   let get_data = async () => {
-    console.log(usersList.current)
     if (usersList.current) return
 
     let response = await fetch('/auth/users')
     let data = await response.json()
     usersList.current = data
-    console.log(data)
   }
 
   useEffect(() => {
