@@ -72,7 +72,7 @@ class Game(models.Model):
         return [
             'Final',
             'FINAL',
-            'OFF'
+            'OFF',
         ]
 
     def __str__(self):
