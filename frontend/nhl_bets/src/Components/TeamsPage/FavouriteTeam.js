@@ -33,7 +33,7 @@ const FavouriteTeam = () => {
         <p>Total Bets: {stats && stats.total_bets}</p>
         <p>Correct: {stats && stats.total_wins}</p>
         <p>Incorrect: {stats && stats.total_losses}</p>
-        <p>Win Percent: {stats && stats.win_percent * 100}%</p>
+        <p>Win Percent: {stats && (stats.win_percent * 100).toFixed(2)}%</p>
       </div>
     </div>
   )

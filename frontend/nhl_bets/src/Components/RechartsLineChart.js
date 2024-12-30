@@ -14,7 +14,7 @@ const CustomTooltip = ({ active, payload }) => {
         }}>
         <p style={{
           margin: 0,
-        }}>{toPercentString(payload[0].value)}</p>
+        }}>{toPercentString((payload[0].value))}</p>
       </div>
     )
   }
