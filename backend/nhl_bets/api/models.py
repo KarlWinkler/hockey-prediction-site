@@ -47,7 +47,7 @@ class Game(models.Model):
     objects = GameManager()
 
     date = models.DateTimeField()
-    game_id = models.IntegerField()
+    game_id = models.IntegerField(unique=True)
     status = models.CharField(max_length=50)
     home_team = models.ForeignKey(Team, on_delete=models.PROTECT, related_name='%(class)s_home_team')
     away_team = models.ForeignKey(Team, on_delete=models.PROTECT, related_name='%(class)s_away_team')

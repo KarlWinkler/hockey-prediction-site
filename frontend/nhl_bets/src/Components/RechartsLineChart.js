@@ -23,7 +23,7 @@ const CustomTooltip = ({ active, payload }) => {
 }
 
 const RechartsLineChart = ({ data }) => {
-  const [brushData, setBrushData] = useState([0, 0]);
+  const [_, setBrushData] = useState([0, 0]);
 
 
   const handleBrushChange = (e) => {

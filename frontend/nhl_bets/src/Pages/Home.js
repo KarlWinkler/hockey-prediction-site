@@ -48,10 +48,10 @@ const Home = () => {
 
   return (
     <div className='Home-wrapper Dashboard-wrapper'>
-      {stats == null ? '' :  <h1>{stats.total_wins}-{stats.total_losses-stats.et_total_losses}-{stats.et_total_losses}</h1>}
-      {stats == null ? '' :  <PieChart title='Overall win %' percents={[stats.win_percent * 100, stats.et_percent * 100]} />}
-      {stats == null ? '' :  <LineChart />}
-      {stats == null ? '' :  <Table title='Win % per score delta' rows={scoreDeltas || [{'No Data': 'NaN'}]} />}
+      {stats && <h1>{stats.total_wins}-{stats.total_losses-stats.et_total_losses}-{stats.et_total_losses}</h1>}
+      {stats && <PieChart title='Overall win %' percents={[stats.win_percent * 100, stats.et_percent * 100]} />}
+      {stats && <LineChart data={stats.win_percents} />}
+      {stats && <Table title='Win % per score delta' rows={scoreDeltas || [{'No Data': 'NaN'}]} />}
       <div className='date-range-selector'>
         <input type='date' onChange={ e => setFrom(e.target.value) } />
         <input type='date' onChange={ e => setTo(e.target.value) } />
